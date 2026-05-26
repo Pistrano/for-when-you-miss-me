@@ -132,7 +132,7 @@ let modoAleatorio = false;
    BUSCAR MÚSICAS
 ===================== */
 
-fetch("/musicas")
+fetch("db.json")
 .then(res => res.json())
 .then(data => {
 
