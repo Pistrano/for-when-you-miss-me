@@ -838,4 +838,37 @@ window.addEventListener(
         );
 
     }, 1800);
-});
+});/* 📲 OFFLINE */
+
+if(
+"serviceWorker"
+in navigator
+){
+
+    window.addEventListener(
+    "load",
+    () => {
+
+        navigator
+        .serviceWorker
+        .register(
+        "/service-worker.js"
+        )
+
+        .then(() => {
+
+            console.log(
+            "offline ativo 💚"
+            );
+
+        })
+
+        .catch(error => {
+
+            console.log(
+            "erro sw",
+            error
+            );
+        });
+    });
+}

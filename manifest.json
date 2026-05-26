@@ -1,8 +1,9 @@
 {
   "name": "For When You Miss Me 💚",
   "short_name": "Miss Me",
-  "start_url": "/",
   "display": "standalone",
+  "scope": "/",
+  "start_url": "/",
   "background_color": "#121212",
   "theme_color": "#1DB954",
   "orientation": "portrait",
