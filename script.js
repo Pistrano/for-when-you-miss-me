@@ -812,3 +812,21 @@ volume.addEventListener(
     audio.volume =
     volume.value / 100;
 });
+/* ✨ LOADING */
+
+window.addEventListener(
+"load",
+() => {
+
+    setTimeout(() => {
+
+        document
+        .getElementById(
+            "loading-screen"
+        )
+        .classList.add(
+            "hide"
+        );
+
+    }, 1800);
+});

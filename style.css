@@ -1277,4 +1277,78 @@ body.saudade-mode
         width:100%;
         justify-content:center;
     }
+}/* ✨ LOADING */
+
+#loading-screen{
+    position:fixed;
+    inset:0;
+
+    background:
+    radial-gradient(
+        circle,
+        rgba(20,20,20,.95),
+        #050505
+    );
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    z-index:999999999;
+
+    transition:
+    opacity .8s ease,
+    visibility .8s ease;
+}
+
+#loading-screen.hide{
+    opacity:0;
+    visibility:hidden;
+}
+
+.loading-content{
+    text-align:center;
+
+    animation:
+    fadeFloat 2s ease infinite;
+}
+
+.loading-heart{
+    font-size:56px;
+
+    margin-bottom:16px;
+
+    filter:
+    drop-shadow(
+        0 0 20px
+        rgba(29,185,84,.35)
+    );
+}
+
+.loading-content h2{
+    font-size:28px;
+
+    margin-bottom:10px;
+}
+
+.loading-content p{
+    color:#b3b3b3;
+}
+
+@keyframes fadeFloat{
+
+    0%{
+        transform:
+        translateY(0);
+    }
+
+    50%{
+        transform:
+        translateY(-8px);
+    }
+
+    100%{
+        transform:
+        translateY(0);
+    }
 }
