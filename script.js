@@ -375,6 +375,14 @@ function carregarMusica(index){
 playBtn.addEventListener(
 "click",
 () => {
+    if(
+navigator.vibrate
+){
+
+    navigator.vibrate(
+        25
+    );
+}
 
     if(!audio.src)
     return;
@@ -422,6 +430,14 @@ shuffleBtn.addEventListener(
 nextBtn.addEventListener(
 "click",
 () => {
+    if(
+navigator.vibrate
+){
+
+    navigator.vibrate(
+        20
+    );
+}
 
     tocarProxima();
 });
@@ -433,6 +449,14 @@ nextBtn.addEventListener(
 prevBtn.addEventListener(
 "click",
 () => {
+    if(
+navigator.vibrate
+){
+
+    navigator.vibrate(
+        20
+    );
+}
 
     musicaAtual--;
 
@@ -757,6 +781,14 @@ saudadeBtn
 .addEventListener(
 "click",
 () => {
+    if(
+navigator.vibrate
+){
+
+    navigator.vibrate(
+        [50,30,50]
+    );
+}
 
     /* ativa saudade mode */
 
