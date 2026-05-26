@@ -1,0 +1,970 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    background:#121212;
+    color:white;
+    overflow:hidden;
+}
+
+/* FUNDO */
+
+#background-blur{
+    position:fixed;
+    inset:0;
+    z-index:-1;
+
+    background-size:cover;
+    background-position:center;
+
+    filter:
+    blur(120px)
+    brightness(.22);
+
+    transform:scale(1.2);
+
+    transition:1s ease;
+}
+
+/* APP */
+
+.app{
+    display:flex;
+    height:100vh;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+    width:240px;
+    background:#090909;
+
+    padding:30px 20px;
+
+    border-right:
+    1px solid
+    rgba(255,255,255,.04);
+}
+
+.sidebar h1{
+    color:#1DB954;
+    margin-bottom:40px;
+}
+
+.menu{
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+}
+
+.menu button{
+    background:none;
+    border:none;
+
+    color:#b3b3b3;
+    text-align:left;
+
+    font-size:16px;
+
+    cursor:pointer;
+
+    transition:.2s ease;
+}
+
+.menu button:hover{
+    color:white;
+}
+
+/* MAIN */
+
+.main-content{
+    flex:1;
+    overflow:auto;
+
+    padding:30px;
+    padding-bottom:150px;
+}
+
+/* HERO */
+
+.hero{
+    display:flex;
+    align-items:center;
+    gap:40px;
+
+    padding:42px;
+
+    border-radius:40px;
+
+    margin-bottom:35px;
+
+    background:
+    linear-gradient(
+        135deg,
+        rgba(18,80,40,.75),
+        rgba(0,0,0,.22)
+    );
+
+    border:
+    1px solid
+    rgba(255,255,255,.05);
+
+    backdrop-filter:
+    blur(25px);
+}
+
+.hero img{
+    width:240px;
+    height:240px;
+
+    object-fit:cover;
+
+    border-radius:30px;
+
+    box-shadow:
+    0 20px 50px
+    rgba(0,0,0,.35);
+}
+
+.hero-text{
+    flex:1;
+}
+
+.playlist-type{
+    color:#1DB954;
+
+    font-size:14px;
+    font-weight:700;
+
+    letter-spacing:1px;
+
+    margin-bottom:10px;
+}
+
+.hero-text h1{
+    font-size:
+    clamp(50px,6vw,90px);
+
+    line-height:.95;
+
+    margin-bottom:16px;
+}
+
+.hero-description{
+    color:#d0d0d0;
+
+    font-size:19px;
+    line-height:1.7;
+
+    margin-bottom:28px;
+
+    transition:.4s ease;
+}
+
+/* HERO INFO */
+
+.hero-info{
+    display:flex;
+    align-items:center;
+
+    width:fit-content;
+
+    border-radius:999px;
+    overflow:hidden;
+
+    background:
+    rgba(255,255,255,.06);
+
+    border:
+    1px solid
+    rgba(255,255,255,.05);
+
+    backdrop-filter:
+    blur(20px);
+}
+
+.hero-info > *{
+    min-height:74px;
+
+    padding:0 32px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    position:relative;
+}
+
+.hero-info > *:not(:last-child)::after{
+    content:"";
+
+    position:absolute;
+    right:0;
+
+    width:1px;
+    height:36px;
+
+    background:
+    rgba(255,255,255,.08);
+}
+
+#open-letter{
+    background:none;
+    border:none;
+
+    color:white;
+    cursor:pointer;
+}
+
+/* BUSCA */
+
+.top-bar input{
+    width:100%;
+
+    padding:16px 20px;
+
+    border:none;
+    border-radius:30px;
+
+    background:#282828;
+    color:white;
+
+    outline:none;
+
+    margin-bottom:28px;
+}
+
+/* PLAYLIST */
+
+.playlist{
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fill,
+    minmax(260px,1fr));
+
+    gap:22px;
+}
+
+.card{
+    background:
+    rgba(255,255,255,.05);
+
+    padding:18px;
+
+    border-radius:28px;
+
+    cursor:pointer;
+
+    transition:.3s ease;
+
+    backdrop-filter:
+    blur(20px);
+}
+
+.card:hover{
+    transform:
+    translateY(-8px)
+    scale(1.02);
+
+    background:
+    rgba(255,255,255,.08);
+
+    box-shadow:
+    0 20px 40px
+    rgba(0,0,0,.35);
+}
+
+.card img{
+    width:100%;
+    aspect-ratio:1/1;
+
+    object-fit:cover;
+
+    border-radius:18px;
+}
+
+.card h3{
+    margin-top:12px;
+}
+
+.card p{
+    color:#b3b3b3;
+    margin-top:4px;
+}
+
+/* CARD ATIVA */
+
+.card.active{
+    background:
+    rgba(29,185,84,.18);
+
+    border:
+    1px solid
+    rgba(29,185,84,.35);
+
+    box-shadow:
+    0 0 30px
+    rgba(29,185,84,.18);
+}
+
+.card.active h3{
+    color:#1DB954;
+}
+
+/* PLAYER */
+
+.player{
+    position:fixed;
+    bottom:0;
+    left:0;
+
+    width:100%;
+    height:110px;
+
+    background:
+    linear-gradient(
+        180deg,
+        rgba(18,18,18,.92),
+        rgba(10,10,10,.98)
+    );
+
+    backdrop-filter:
+    blur(30px);
+
+    border-top:
+    1px solid
+    rgba(255,255,255,.06);
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:0 38px;
+
+    z-index:999;
+}
+
+/* PROGRESS */
+
+.progress-area{
+    position:absolute;
+    top:0;
+    left:0;
+
+    width:100%;
+}
+
+#progress{
+    width:100%;
+    height:5px;
+
+    appearance:none;
+    -webkit-appearance:none;
+
+    background:
+    linear-gradient(
+        to right,
+        #1DB954 0%,
+        #1DB954 var(--progress),
+        rgba(255,255,255,.08) var(--progress),
+        rgba(255,255,255,.08) 100%
+    );
+
+    cursor:pointer;
+}
+
+#progress::-webkit-slider-thumb{
+    appearance:none;
+
+    width:14px;
+    height:14px;
+
+    border-radius:50%;
+
+    background:#1DB954;
+}
+
+/* PLAYER LEFT */
+
+.player-left{
+    display:flex;
+    align-items:center;
+    gap:18px;
+
+    width:340px;
+}
+
+#cover{
+    width:72px;
+    height:72px;
+
+    border-radius:18px;
+
+    object-fit:cover;
+
+    box-shadow:
+    0 10px 30px
+    rgba(0,0,0,.35);
+}
+
+.music-info{
+    min-width:0;
+}
+
+#title{
+    font-size:20px;
+    font-weight:700;
+
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+#artist{
+    color:#b3b3b3;
+    margin-top:4px;
+}
+
+#music-message{
+    color:#1DB954;
+
+    margin-top:5px;
+
+    font-size:13px;
+    font-style:italic;
+}
+
+/* PLAYER CENTER */
+
+.player-center{
+    flex:1;
+
+    display:flex;
+    justify-content:center;
+}
+
+/* CONTROLS */
+
+.controls{
+    display:flex;
+    align-items:center;
+    gap:18px;
+}
+
+.controls button{
+    width:50px;
+    height:50px;
+
+    border:none;
+    border-radius:50%;
+
+    background:
+    rgba(255,255,255,.08);
+
+    color:white;
+
+    font-size:18px;
+
+    cursor:pointer;
+
+    transition:.25s ease;
+}
+
+.controls button:hover{
+    transform:
+    scale(1.06);
+
+    background:
+    rgba(255,255,255,.14);
+}
+
+#play{
+    width:74px;
+    height:74px;
+
+    background:
+    linear-gradient(
+        135deg,
+        #1ed760,
+        #1DB954
+    );
+
+    font-size:30px;
+
+    box-shadow:
+    0 10px 30px
+    rgba(29,185,84,.35);
+}
+
+#shuffle.active{
+    background:
+    rgba(29,185,84,.16);
+
+    color:#1DB954;
+}
+
+/* CARTA */
+
+#letter-modal{
+    position:fixed;
+    inset:0;
+
+    background:
+    rgba(0,0,0,.75);
+
+    backdrop-filter:
+    blur(20px);
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    opacity:0;
+    pointer-events:none;
+
+    transition:.3s ease;
+
+    z-index:99999;
+}
+
+#letter-modal.active{
+    opacity:1;
+    pointer-events:all;
+}
+
+.letter-card{
+    width:min(92%,700px);
+
+    padding:45px;
+
+    border-radius:35px;
+
+    background:
+    linear-gradient(
+        180deg,
+        rgba(30,30,30,.96),
+        rgba(18,18,18,.98)
+    );
+
+    border:
+    1px solid
+    rgba(255,255,255,.08);
+
+    position:relative;
+}
+
+.letter-text{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+
+    color:#d6d6d6;
+
+    line-height:1.8;
+}
+
+#close-letter{
+    position:absolute;
+    top:18px;
+    right:18px;
+
+    width:40px;
+    height:40px;
+
+    border:none;
+    border-radius:50%;
+
+    background:
+    rgba(255,255,255,.08);
+
+    color:white;
+
+    cursor:pointer;
+}
+
+/* WELCOME */
+
+#welcome-screen{
+    position:fixed;
+    inset:0;
+
+    background:
+    rgba(10,10,10,.82);
+
+    backdrop-filter:
+    blur(20px);
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    z-index:999999;
+}
+
+.welcome-card{
+    width:min(90%,650px);
+
+    background:
+    rgba(255,255,255,.06);
+
+    border:
+    1px solid
+    rgba(255,255,255,.08);
+
+    border-radius:35px;
+
+    padding:50px;
+
+    text-align:center;
+}
+
+#enter-btn{
+    margin-top:28px;
+
+    border:none;
+    border-radius:999px;
+
+    padding:18px 30px;
+
+    background:#1DB954;
+    color:white;
+
+    cursor:pointer;
+}audio{
+    opacity:1;
+    transition:
+    opacity .4s ease;
+}
+#contador{
+    color:#1DB954;
+
+    font-weight:600;
+
+    text-shadow:
+    0 0 20px
+    rgba(29,185,84,.25);
+}/* 🌙 MODO SAUDADE */
+
+body.saudade-mode{
+    background:
+    #090909;
+}
+
+/* fundo mais cinematográfico */
+
+body.saudade-mode
+#background-blur{
+
+    filter:
+    blur(160px)
+    brightness(.14)
+    saturate(1.15);
+
+    transform:
+    scale(1.35);
+}
+
+/* hero mais íntima */
+
+body.saudade-mode
+.hero{
+
+    background:
+    linear-gradient(
+        135deg,
+        rgba(10,40,20,.85),
+        rgba(0,0,0,.5)
+    );
+
+    box-shadow:
+    0 0 50px
+    rgba(29,185,84,.08);
+}
+
+/* cards mais suaves */
+
+body.saudade-mode
+.card{
+
+    background:
+    rgba(255,255,255,.04);
+}
+
+/* player mais cinema */
+
+body.saudade-mode
+.player{
+
+    background:
+    linear-gradient(
+        180deg,
+        rgba(5,5,5,.95),
+        rgba(0,0,0,.98)
+    );
+
+    border-top:
+    1px solid
+    rgba(29,185,84,.08);
+}
+
+/* glow verde suave */
+
+body.saudade-mode
+#play{
+
+    box-shadow:
+    0 0 35px
+    rgba(29,185,84,.18);
+}
+
+/* contador mais romântico */
+
+body.saudade-mode
+#contador{
+
+    text-shadow:
+    0 0 25px
+    rgba(29,185,84,.4);
+}/* 📸 MEMÓRIAS */
+
+#memory-popup{
+    position:fixed;
+
+    right:28px;
+    bottom:135px;
+
+    width:330px;
+
+    background:
+    rgba(18,18,18,.92);
+
+    backdrop-filter:
+    blur(30px);
+
+    border:
+    1px solid
+    rgba(255,255,255,.06);
+
+    border-radius:28px;
+
+    padding:14px;
+
+    display:flex;
+    align-items:center;
+    gap:14px;
+
+    z-index:999999;
+
+    opacity:0;
+    transform:
+    translateY(20px);
+
+    pointer-events:none;
+
+    transition:.5s ease;
+}
+
+#memory-popup.show{
+    opacity:1;
+
+    transform:
+    translateY(0);
+}
+
+#memory-photo{
+    width:72px;
+    height:72px;
+
+    border-radius:18px;
+
+    object-fit:cover;
+}
+
+.memory-text{
+    flex:1;
+}
+
+.memory-small{
+    color:#1DB954;
+
+    font-size:12px;
+
+    margin-bottom:5px;
+}
+
+#memory-message{
+    color:white;
+
+    line-height:1.4;
+}/* 🛬 ELE VOLTOU */
+
+#return-screen{
+    position:fixed;
+    inset:0;
+
+    background:
+    rgba(5,5,5,.92);
+
+    backdrop-filter:
+    blur(35px);
+
+    display:none;
+    justify-content:center;
+    align-items:center;
+
+    z-index:99999999;
+}
+
+.return-card{
+    width:min(90%,650px);
+
+    background:
+    rgba(255,255,255,.06);
+
+    border:
+    1px solid
+    rgba(255,255,255,.08);
+
+    border-radius:38px;
+
+    padding:50px;
+
+    text-align:center;
+
+    animation:
+    fadeIn .8s ease;
+}
+
+.return-card img{
+    width:180px;
+    height:180px;
+
+    border-radius:30px;
+
+    object-fit:cover;
+
+    margin-bottom:22px;
+
+    box-shadow:
+    0 20px 50px
+    rgba(0,0,0,.35);
+}
+
+.return-small{
+    color:#1DB954;
+
+    margin-bottom:10px;
+}
+
+.return-card h1{
+    font-size:58px;
+
+    margin-bottom:18px;
+}
+
+.return-message{
+    color:#d0d0d0;
+
+    font-size:20px;
+    line-height:1.8;
+
+    margin-bottom:18px;
+}
+
+.return-sub{
+    color:#1DB954;
+}
+
+@keyframes fadeIn{
+    from{
+        opacity:0;
+        transform:
+        translateY(20px);
+    }
+
+    to{
+        opacity:1;
+        transform:
+        translateY(0);
+    }
+}/* 💚 BOTÃO SAUDADE */
+
+#saudade-btn{
+    border:none;
+    background:none;
+
+    color:white;
+
+    cursor:pointer;
+
+    transition:.25s ease;
+}
+
+#saudade-btn:hover{
+    background:
+    rgba(29,185,84,.08);
+}
+
+/* popup saudade */
+
+#saudade-popup{
+    position:fixed;
+
+    top:28px;
+    right:28px;
+
+    background:
+    rgba(18,18,18,.95);
+
+    border:
+    1px solid
+    rgba(29,185,84,.15);
+
+    border-radius:24px;
+
+    padding:18px 22px;
+
+    backdrop-filter:
+    blur(30px);
+
+    color:white;
+
+    opacity:0;
+    transform:
+    translateY(-20px);
+
+    pointer-events:none;
+
+    transition:.4s ease;
+
+    z-index:999999;
+}
+
+#saudade-popup.show{
+    opacity:1;
+
+    transform:
+    translateY(0);
+}
+
+.saudade-small{
+    color:#1DB954;
+
+    font-size:13px;
+
+    margin-bottom:6px;
+}
+#top-song{
+    color:#1DB954;
+
+    font-weight:600;
+
+    text-shadow:
+    0 0 18px
+    rgba(29,185,84,.2);
+}
