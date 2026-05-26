@@ -3,6 +3,11 @@ document.getElementById(
 "music-message"
 );
 
+const volume =
+document.getElementById(
+"volume"
+);
+
 const topSong =
 document.getElementById(
 "top-song"
@@ -798,3 +803,12 @@ function atualizarTopSong(){
 }
 
 atualizarTopSong();
+/* 🔊 VOLUME */
+
+volume.addEventListener(
+"input",
+() => {
+
+    audio.volume =
+    volume.value / 100;
+});
