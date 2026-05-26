@@ -967,4 +967,173 @@ body.saudade-mode
     text-shadow:
     0 0 18px
     rgba(29,185,84,.2);
+}/* 📱 MOBILE */
+
+@media (max-width:900px){
+
+    body{
+        overflow:auto;
+    }
+
+    .app{
+        flex-direction:column;
+        height:auto;
+    }
+
+    /* sidebar */
+
+    .sidebar{
+        width:100%;
+
+        display:flex;
+        justify-content:center;
+        align-items:center;
+
+        padding:20px;
+
+        border-right:none;
+        border-bottom:
+        1px solid
+        rgba(255,255,255,.05);
+    }
+
+    .menu{
+        flex-direction:row;
+        gap:18px;
+    }
+
+    .sidebar h1{
+        display:none;
+    }
+
+    /* hero */
+
+    .hero{
+        flex-direction:column;
+
+        text-align:center;
+
+        padding:28px;
+        gap:24px;
+
+        border-radius:28px;
+    }
+
+    .hero img{
+        width:180px;
+        height:180px;
+    }
+
+    .hero-text h1{
+        font-size:42px;
+    }
+
+    .hero-description{
+        font-size:16px;
+    }
+
+    .hero-info{
+        width:100%;
+
+        flex-direction:column;
+
+        border-radius:24px;
+    }
+
+    .hero-info > *{
+        width:100%;
+        min-height:62px;
+    }
+
+    .hero-info > *::after{
+        display:none;
+    }
+
+    /* playlist */
+
+    .playlist{
+        grid-template-columns:
+        1fr 1fr;
+
+        gap:14px;
+    }
+
+    .card{
+        padding:14px;
+    }
+
+    .card h3{
+        font-size:15px;
+    }
+
+    .card p{
+        font-size:13px;
+    }
+
+    /* player */
+
+    .player{
+        height:auto;
+
+        flex-direction:column;
+
+        gap:16px;
+
+        padding:
+        18px 20px 25px;
+
+        justify-content:center;
+    }
+
+    .player-left{
+        width:100%;
+        justify-content:center;
+    }
+
+    .music-info{
+        text-align:left;
+    }
+
+    .player-center{
+        width:100%;
+    }
+
+    .controls{
+        justify-content:center;
+    }
+
+    #play{
+        width:65px;
+        height:65px;
+    }
+
+    /* memory popup */
+
+    #memory-popup{
+        right:16px;
+        left:16px;
+
+        width:auto;
+
+        bottom:160px;
+    }
+
+    /* welcome */
+
+    .welcome-card{
+        width:92%;
+        padding:35px 25px;
+    }
+
+    .welcome-card h1{
+        font-size:28px;
+    }
+
+    /* carta */
+
+    .letter-card{
+        width:92%;
+
+        padding:30px 24px;
+    }
 }
