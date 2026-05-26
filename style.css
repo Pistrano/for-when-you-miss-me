@@ -967,7 +967,7 @@ body.saudade-mode
     text-shadow:
     0 0 18px
     rgba(29,185,84,.2);
-}/* 📱 MOBILE */
+}/* 📱 MOBILE PREMIUM */
 
 @media (max-width:900px){
 
@@ -975,123 +975,196 @@ body.saudade-mode
         overflow:auto;
     }
 
-    .app{
-        flex-direction:column;
-        height:auto;
+    .main-content{
+        padding:18px;
+        padding-bottom:210px;
     }
 
-    /* sidebar */
+    /* SIDEBAR */
 
     .sidebar{
-        width:100%;
-
-        display:flex;
-        justify-content:center;
-        align-items:center;
-
-        padding:20px;
-
-        border-right:none;
-        border-bottom:
-        1px solid
-        rgba(255,255,255,.05);
-    }
-
-    .menu{
-        flex-direction:row;
-        gap:18px;
-    }
-
-    .sidebar h1{
         display:none;
     }
 
-    /* hero */
+    /* HERO */
 
     .hero{
+        display:flex;
         flex-direction:column;
 
+        align-items:center;
         text-align:center;
 
-        padding:28px;
-        gap:24px;
+        gap:20px;
 
-        border-radius:28px;
+        padding:28px 22px;
+
+        border-radius:34px;
+
+        margin-bottom:20px;
+
+        background:
+        linear-gradient(
+        180deg,
+        rgba(15,80,40,.45),
+        rgba(0,0,0,.95)
+        );
     }
 
     .hero img{
         width:180px;
         height:180px;
+
+        border-radius:28px;
+
+        object-fit:cover;
+
+        margin-bottom:6px;
+    }
+
+    .playlist-type{
+        font-size:14px;
+        letter-spacing:1px;
     }
 
     .hero-text h1{
-        font-size:42px;
+        font-size:64px;
+        line-height:.92;
+
+        margin-bottom:18px;
     }
 
     .hero-description{
-        font-size:16px;
+        font-size:18px;
+        line-height:1.7;
+
+        color:#d5d5d5;
+
+        margin-bottom:20px;
     }
+
+    /* HERO INFO */
 
     .hero-info{
         width:100%;
 
+        display:flex;
         flex-direction:column;
 
-        border-radius:24px;
+        border-radius:30px;
+
+        overflow:hidden;
+
+        background:
+        rgba(255,255,255,.05);
     }
 
     .hero-info > *{
         width:100%;
-        min-height:62px;
+
+        min-height:78px;
+
+        display:flex;
+        align-items:center;
+        justify-content:center;
+
+        padding:20px;
     }
 
     .hero-info > *::after{
         display:none;
     }
 
-    /* playlist */
+    #contador{
+        font-size:1.1rem;
+    }
+
+    /* BUSCA */
+
+    .top-bar input{
+        padding:18px 22px;
+        border-radius:25px;
+    }
+
+    /* PLAYLIST */
 
     .playlist{
-        grid-template-columns:
-        1fr 1fr;
-
-        gap:14px;
+        grid-template-columns:1fr;
+        gap:18px;
     }
 
     .card{
+        display:flex;
+        align-items:center;
+
+        gap:16px;
+
         padding:14px;
+
+        border-radius:26px;
+    }
+
+    .card img{
+        width:90px;
+        height:90px;
+
+        border-radius:18px;
+
+        flex-shrink:0;
     }
 
     .card h3{
-        font-size:15px;
+        margin-top:0;
+        font-size:18px;
     }
 
     .card p{
-        font-size:13px;
+        font-size:14px;
     }
 
-    /* player */
+    /* PLAYER */
 
     .player{
         height:auto;
 
+        display:flex;
         flex-direction:column;
 
         gap:16px;
 
-        padding:
-        18px 20px 25px;
+        padding:18px 20px 24px;
 
         justify-content:center;
+
+        border-radius:
+        28px 28px 0 0;
     }
 
     .player-left{
         width:100%;
-        justify-content:center;
+
+        justify-content:flex-start;
+    }
+
+    #cover{
+        width:70px;
+        height:70px;
     }
 
     .music-info{
         text-align:left;
+    }
+
+    #title{
+        font-size:20px;
+    }
+
+    #artist{
+        font-size:16px;
+    }
+
+    #music-message{
+        font-size:14px;
     }
 
     .player-center{
@@ -1099,41 +1172,60 @@ body.saudade-mode
     }
 
     .controls{
-        justify-content:center;
+        justify-content:space-evenly;
+        width:100%;
+    }
+
+    .controls button{
+        width:58px;
+        height:58px;
     }
 
     #play{
-        width:65px;
-        height:65px;
-    }
+        width:78px;
+        height:78px;
 
-    /* memory popup */
-
-    #memory-popup{
-        right:16px;
-        left:16px;
-
-        width:auto;
-
-        bottom:160px;
-    }
-
-    /* welcome */
-
-    .welcome-card{
-        width:92%;
-        padding:35px 25px;
-    }
-
-    .welcome-card h1{
         font-size:28px;
     }
 
-    /* carta */
+    /* POPUPS */
+
+    #memory-popup{
+        left:16px;
+        right:16px;
+
+        width:auto;
+
+        bottom:190px;
+    }
+
+    #saudade-popup{
+        left:16px;
+        right:16px;
+
+        top:16px;
+    }
+
+    /* CARTA */
 
     .letter-card{
-        width:92%;
+        width:94%;
+
+        max-height:80vh;
+
+        overflow:auto;
 
         padding:30px 24px;
+    }
+
+    /* WELCOME */
+
+    .welcome-card{
+        width:92%;
+        padding:34px 24px;
+    }
+
+    .welcome-card h1{
+        font-size:32px;
     }
 }
