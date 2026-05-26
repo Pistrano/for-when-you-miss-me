@@ -197,17 +197,103 @@ function carregarMusica(index){
         cover.src =
         `covers/${musica.capa}`;
 
+        background.style
+        .backgroundImage =
+        `url(covers/${musica.capa})`;
+
         title.textContent =
         musica.titulo;
 
         artist.textContent =
         musica.artista;
 
+        /* 📱 IPHONE LOCKSCREEN */
+
+        if(
+        "mediaSession"
+        in navigator
+        ){
+
+            navigator
+            .mediaSession
+            .metadata =
+            new MediaMetadata({
+
+                title:
+                musica.titulo,
+
+                artist:
+                musica.artista,
+
+                album:
+                "For When You Miss Me 💚",
+
+                artwork: [
+
+                {
+                    src:
+                    `covers/${musica.capa}`,
+
+                    sizes:
+                    "512x512",
+
+                    type:
+                    "image/jpeg"
+                }
+
+                ]
+            });
+
+            navigator
+            .mediaSession
+            .setActionHandler(
+                "play",
+                () => {
+
+                    audio.play();
+                }
+            );
+
+            navigator
+            .mediaSession
+            .setActionHandler(
+                "pause",
+                () => {
+
+                    audio.pause();
+                }
+            );
+
+            navigator
+            .mediaSession
+            .setActionHandler(
+                "previoustrack",
+                () => {
+
+                    prevBtn.click();
+                }
+            );
+
+            navigator
+            .mediaSession
+            .setActionHandler(
+                "nexttrack",
+                () => {
+
+                    nextBtn.click();
+                }
+            );
+        }
+
         musicMessage.textContent =
         musica.mensagem || "";
 
         mostrarMemoria(
             musica
+        );
+
+        salvarHistorico(
+            musica.titulo
         );
 
         audio.volume = 0;
@@ -217,13 +303,19 @@ function carregarMusica(index){
         const fadeIn =
         setInterval(() => {
 
-            if(audio.volume < 0.95){
+            if(
+            audio.volume
+            < 0.95
+            ){
 
-                audio.volume += 0.05;
+                audio.volume +=
+                0.05;
 
             } else {
 
-                audio.volume = 1;
+                audio.volume =
+                volume.value
+                / 100;
 
                 clearInterval(
                     fadeIn
@@ -236,16 +328,25 @@ function carregarMusica(index){
 
         playBtn.innerHTML =
         "❚❚";
+
+        atualizarCardAtivo();
     }
 
-    /* se já tem música tocando */
+    /* 🎶 CROSSFADE */
 
-    if(audio.src && !audio.paused){
+    if(
+        audio.src
+        &&
+        !audio.paused
+    ){
 
         const fadeOut =
         setInterval(() => {
 
-            if(audio.volume > 0.05){
+            if(
+            audio.volume
+            > 0.05
+            ){
 
                 audio.volume -=
                 0.05;
