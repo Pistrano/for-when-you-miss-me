@@ -184,19 +184,12 @@ fetch("db.json")
 
 function carregarMusica(index){
 
-    musicaAtual = index;
+    function trocarMusica(){
 
-    const musica =
-    musicas[index];
+        musicaAtual = index;
 
-    /* fade out */
-
-    audio.style.transition =
-    "opacity .4s ease";
-
-    audio.style.opacity = 0;
-
-    setTimeout(() => {
+        const musica =
+        musicas[index];
 
         audio.src =
         `musics/${musica.arquivo}`;
@@ -210,54 +203,70 @@ function carregarMusica(index){
         artist.textContent =
         musica.artista;
 
-        if(musica.mensagem){
-            musicMessage.textContent =
-            musica.mensagem;
-            mostrarMemoria(
-    musica
-);
-        } else {
-            musicMessage.textContent = "";
-        }
+        musicMessage.textContent =
+        musica.mensagem || "";
 
-        /* quando carregar */
-
-        audio.addEventListener(
-        "canplay",
-        () => {
-
-            audio.play();
-            salvarHistorico(
-    musica.titulo
-);
-
-            audio.style.opacity = 1;
-
-        },
-        { once:true });
-
-        /* card ativo */
-
-        document
-        .querySelectorAll(".card")
-        .forEach(card =>
-            card.classList
-            .remove("active")
+        mostrarMemoria(
+            musica
         );
 
-        document
-        .querySelectorAll(".card")
-        [index]
-        ?.classList
-        .add("active");
+        audio.volume = 0;
 
-    }, 350);
+        audio.play();
 
-    tocando = true;
+        const fadeIn =
+        setInterval(() => {
 
-    playBtn.innerHTML =
-    "❚❚";
+            if(audio.volume < 0.95){
+
+                audio.volume += 0.05;
+
+            } else {
+
+                audio.volume = 1;
+
+                clearInterval(
+                    fadeIn
+                );
+            }
+
+        }, 40);
+
+        tocando = true;
+
+        playBtn.innerHTML =
+        "❚❚";
+    }
+
+    /* se já tem música tocando */
+
+    if(audio.src && !audio.paused){
+
+        const fadeOut =
+        setInterval(() => {
+
+            if(audio.volume > 0.05){
+
+                audio.volume -=
+                0.05;
+
+            } else {
+
+                clearInterval(
+                    fadeOut
+                );
+
+                trocarMusica();
+            }
+
+        }, 40);
+
+    } else {
+
+        trocarMusica();
+    }
 }
+
 /* =====================
    PLAY / PAUSE
 ===================== */
