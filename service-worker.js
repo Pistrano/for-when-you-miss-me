@@ -1,20 +1,7 @@
 const CACHE_NAME =
-"before-the-exchange-v1";
+"before-the-exchange-v2";
 
-const urlsToCache = [
-
-"/",
-"/index.html",
-"/style.css",
-"/script.js",
-"/db.json",
-"/manifest.json",
-
-"/covers/romantic.jpg"
-
-];
-
-/* instala */
+/* instalar */
 
 self.addEventListener(
 "install",
@@ -28,15 +15,49 @@ event => {
 
         .then(cache => {
 
-            return cache
-            .addAll(
-                urlsToCache
+            return cache.addAll([
+
+                "/",
+                "/index.html",
+                "/style.css",
+                "/script.js",
+                "/db.json",
+                "/manifest.json"
+
+            ]);
+        })
+    );
+});
+
+/* ativar */
+
+self.addEventListener(
+"activate",
+event => {
+
+    event.waitUntil(
+
+        caches.keys()
+        .then(keys => {
+
+            return Promise.all(
+
+                keys.map(key => {
+
+                    if(
+                        key !== CACHE_NAME
+                    ){
+
+                        return caches
+                        .delete(key);
+                    }
+                })
             );
         })
     );
 });
 
-/* responder offline */
+/* buscar */
 
 self.addEventListener(
 "fetch",
@@ -55,6 +76,23 @@ event => {
                 fetch(
                     event.request
                 )
+                .then(networkResponse => {
+
+                    return caches
+                    .open(
+                        CACHE_NAME
+                    )
+                    .then(cache => {
+
+                        cache.put(
+                            event.request,
+                            networkResponse.clone()
+                        );
+
+                        return networkResponse;
+                    });
+
+                })
             );
         })
     );
