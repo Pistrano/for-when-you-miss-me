@@ -1,17 +1,25 @@
 {
   "name": "For When You Miss Me 💚",
-  "short_name": "Miss Me",
+  "short_name": "Miss Me 💚",
+  "description": "Uma playlist feita com amor, para quando a saudade apertar.",
   "display": "standalone",
   "scope": "/",
   "start_url": "/",
-  "background_color": "#121212",
+  "background_color": "#0a0e0a",
   "theme_color": "#1DB954",
   "orientation": "portrait",
   "icons": [
     {
-      "src": "covers/romantic.jpg",
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
       "sizes": "512x512",
-      "type": "image/jpeg"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }

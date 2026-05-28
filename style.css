@@ -1020,3 +1020,126 @@ body.saudade-mode #play { box-shadow: 0 0 40px rgba(29,185,84,.16); }
     .return-card { padding: 36px 24px; }
     .return-card h1 { font-size: 40px; }
 }
+
+/* ── MELHORIAS EXTRAS ───────────────── */
+
+/* Entrada animada dos cards */
+@keyframes cardEntrance {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.card {
+    animation: cardEntrance .4s ease both;
+}
+
+/* stagger nos primeiros 12 */
+.card:nth-child(1)  { animation-delay: .05s }
+.card:nth-child(2)  { animation-delay: .09s }
+.card:nth-child(3)  { animation-delay: .13s }
+.card:nth-child(4)  { animation-delay: .17s }
+.card:nth-child(5)  { animation-delay: .21s }
+.card:nth-child(6)  { animation-delay: .25s }
+.card:nth-child(7)  { animation-delay: .29s }
+.card:nth-child(8)  { animation-delay: .33s }
+.card:nth-child(9)  { animation-delay: .37s }
+.card:nth-child(10) { animation-delay: .41s }
+.card:nth-child(11) { animation-delay: .45s }
+.card:nth-child(12) { animation-delay: .49s }
+
+/* Pulso no botão play quando tocando */
+@keyframes playPulse {
+    0%, 100% { box-shadow: 0 8px 28px rgba(29,185,84,.28); }
+    50%       { box-shadow: 0 8px 40px rgba(29,185,84,.55), 0 0 0 8px rgba(29,185,84,.08); }
+}
+
+#play.tocando {
+    animation: playPulse 2s ease infinite;
+}
+
+/* Cover no player — gira suavemente quando tocando */
+@keyframes spinSlow {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
+
+#cover.tocando {
+    animation: spinSlow 18s linear infinite;
+    border-radius: 50%;
+}
+
+/* Transição de welcome suave */
+#welcome-screen {
+    transition: opacity .6s ease;
+}
+
+/* Barra de busca com ícone de lupa visual */
+.top-bar {
+    position: relative;
+}
+
+.top-bar input {
+    padding-left: 44px;
+}
+
+.top-bar::before {
+    content: '🔍';
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-60%);
+    font-size: 15px;
+    pointer-events: none;
+    opacity: .5;
+}
+
+/* Texto da mensagem diária com fade ao trocar */
+#daily-message {
+    transition: opacity .5s ease;
+}
+
+/* Ajuste fino do progress bar hover */
+#progress:hover::-webkit-slider-thumb {
+    transform: scale(1.4);
+}
+
+/* Letter modal — scroll mais bonito */
+.letter-card {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,.08) transparent;
+}
+
+.letter-card::-webkit-scrollbar { width: 4px; }
+.letter-card::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,.1);
+    border-radius: 99px;
+}
+
+/* Melhorar hover do contador e spans do hero */
+.hero-info > *:not(button) {
+    font-size: 13px;
+    font-weight: 400;
+    color: #ccc;
+}
+
+/* Return card — suavizar botão de fechar */
+.return-card button {
+    margin-top: 24px;
+    border: none;
+    border-radius: 999px;
+    padding: 14px 30px;
+    background: linear-gradient(135deg, #22d460, #1DB954);
+    color: #fff;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: .3s ease;
+    box-shadow: 0 8px 28px rgba(29,185,84,.25);
+}
+
+/* Mobile — lupa some */
+@media (max-width: 900px) {
+    .top-bar::before { display: none; }
+    .top-bar input { padding-left: 18px; }
+}

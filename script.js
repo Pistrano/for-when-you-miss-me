@@ -1005,3 +1005,22 @@ in navigator
         });
     });
 }
+/* ── EFEITOS VISUAIS EXTRAS ──────────── */
+
+function syncVisuals(){
+    if(tocando){
+        playBtn.classList.add('tocando');
+        cover.classList.add('tocando');
+    } else {
+        playBtn.classList.remove('tocando');
+        cover.classList.remove('tocando');
+    }
+}
+
+// Patch play button click to also sync visuals
+const _origPlay = playBtn.onclick;
+playBtn.addEventListener('click', () => setTimeout(syncVisuals, 50));
+
+// Sync when music loads
+audio.addEventListener('play',  () => { tocando = true;  syncVisuals(); });
+audio.addEventListener('pause', () => { tocando = false; syncVisuals(); });
