@@ -1143,3 +1143,109 @@ body.saudade-mode #play { box-shadow: 0 0 40px rgba(29,185,84,.16); }
     .top-bar::before { display: none; }
     .top-bar input { padding-left: 18px; }
 }
+
+/* ── TEMPO DA MÚSICA ───────────────── */
+
+.progress-area {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+}
+
+.time-display {
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 14px 0;
+    font-size: 11px;
+    color: var(--muted);
+    font-weight: 300;
+    letter-spacing: .3px;
+    pointer-events: none;
+}
+
+/* ── BOTÃO REPEAT ──────────────────── */
+
+#repeat.active {
+    background: var(--green-soft);
+    color: var(--green);
+}
+
+/* ── CORAÇÕES FLUTUANTES ───────────── */
+
+#hearts-container {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999998;
+    overflow: hidden;
+}
+
+.floating-heart {
+    position: absolute;
+    bottom: -40px;
+    animation: floatUp linear forwards;
+    pointer-events: none;
+    user-select: none;
+    will-change: transform, opacity;
+}
+
+@keyframes floatUp {
+    0%   { transform: translateY(0)    rotate(0deg);   opacity: 1; }
+    70%  { opacity: 1; }
+    100% { transform: translateY(-95vh) rotate(25deg); opacity: 0; }
+}
+
+/* ── WELCOME — fundo com foto ──────── */
+
+.welcome-bg {
+    position: absolute;
+    inset: 0;
+    background: url('covers/romantic.jpg') center/cover no-repeat;
+    filter: blur(60px) brightness(.18) saturate(1.2);
+    transform: scale(1.1);
+    z-index: 0;
+}
+
+#welcome-screen {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999999;
+    transition: opacity .6s ease;
+    overflow: hidden;
+}
+
+.welcome-card {
+    position: relative;
+    z-index: 1;
+}
+
+/* ── DIAS PASSADOS ─────────────────── */
+
+#dias-passados {
+    color: #c8a0c0;
+    font-weight: 500;
+    font-size: 13px;
+}
+
+/* ── PLAYER — ajuste com tempo ─────── */
+
+.player {
+    padding-top: 20px; /* espaço para o tempo */
+}
+
+@media (max-width: 900px) {
+    .time-display {
+        padding: 3px 10px 0;
+        font-size: 10px;
+    }
+
+    /* repeat visível no mobile */
+    #repeat { display: flex; }
+
+    .player {
+        padding-top: 22px;
+    }
+}
