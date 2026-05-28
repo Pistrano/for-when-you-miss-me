@@ -1,0 +1,17 @@
+{
+  "name": "For When You Miss Me 💚",
+  "short_name": "Miss Me",
+  "display": "standalone",
+  "scope": "/",
+  "start_url": "/",
+  "background_color": "#121212",
+  "theme_color": "#1DB954",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "covers/romantic.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg"
+    }
+  ]
+}
