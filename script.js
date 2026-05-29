@@ -350,18 +350,21 @@ verificarRetorno();
 
 /* ── MENSAGEM DO DIA ───────────────── */
 const mensagensDoDia = [
-    '💚 mais um dia perto de te abraçar',
-    '✈️ a saudade ainda mora aqui, mas você também',
+    '💚 já tá quase. cada dia conta.',
+    '✈️ do outro lado do mundo, mas ainda pertinho daqui',
     '🌙 espero que hoje tenha sido leve por aí',
-    '🎧 caso hoje esteja difícil, aperta o botão verdinho 💚',
-    '💌 eu ainda escolho você, mesmo de longe',
-    '☁️ mais um dia vencido do intercâmbio',
-    '💚 tô torcendo por você daqui',
-    '🫂 espero que alguma música hoje te abrace',
-    '✨ menos um dia de distância',
-    '🎵 mesmo longe, ainda parece pertinho',
-    '🌎 onde você estiver hoje, tô pensando em você',
-    '💚 você ainda é meu lugar favorito',
+    '🎧 caso a saudade aperte hoje, esse lugar é seu 💚',
+    '💌 eu ainda escolho você, mesmo com o oceano no meio',
+    '☁️ mais um dia vencido. a reta final tá chegando.',
+    '💚 tô pensando em você todo dia daqui',
+    '🫂 espero que alguma música hoje te abrace um pouco',
+    '✨ menos um dia de distância. tô contando.',
+    '🎵 mesmo longe, você ainda é minha música favorita',
+    '🌎 onde você estiver hoje, eu tô torcendo por você',
+    '💚 você ainda é meu lugar favorito do mundo inteiro',
+    '🛬 quase lá. quase aqui. quase junto.',
+    '💚 109 dias de saudade e cada um valeu',
+    '🌿 você vai voltar e eu vou tá aqui do mesmo jeito',
 ];
 function atualizarMensagemDoDia() {
     const idx = Math.floor(Date.now() / 864e5) % mensagensDoDia.length;
@@ -437,56 +440,131 @@ setTimeout(pedirPermissaoNotificacao, 3000);
    DATAS ESPECIAIS
 ═══════════════════════════════════════ */
 
-const DATA_ANIVERSARIO = new Date('2026-06-09T00:00:00Z');
-const DATA_NAMORADOS   = new Date('2026-06-12T00:00:00Z');
+// Namorando desde 09/12/2025 — datas mensais até 1 ano
+const DATAS_ESPECIAIS = [
+    // já passadas (mostram se abrir nesse dia exato)
+    { data: '2026-01-09', meses: 1,  emoji: '💚', tag: '1 mês juntos',
+      titulo: 'um mês<br><em style="color:var(--green)">de você</em>',
+      msg: `<span>o primeiro mês inteiro com você.</span>
+            <span>ainda tava tentando acreditar que era de verdade.</span>
+            <span>obrigado por cada mensagem, cada risada, cada vez que você me fez sentir especial. 💚</span>` },
 
-/* ── TELA DE CONTAGEM REGRESSIVA ────── */
+    { data: '2026-02-09', meses: 2,  emoji: '💚', tag: '2 meses juntos · e você foi embora nesse dia',
+      titulo: 'dois meses<br><em style="color:var(--green)">e já saudade</em>',
+      msg: `<span>dois meses de namoro e você embarcou pro intercâmbio.</span>
+            <span>que timing, né? mas eu nunca duvidei que a gente ia conseguir.</span>
+            <span>esse dia tem dois significados: comemoramos e te despedimos. os dois doeram e os dois foram bonitos. 💚</span>` },
+
+    { data: '2026-03-09', meses: 3,  emoji: '💚', tag: '3 meses juntos · de longe',
+      titulo: 'três meses<br><em style="color:var(--green)">mesmo longe</em>',
+      msg: `<span>três meses. um deles inteiro com você do outro lado do mundo.</span>
+            <span>e mesmo assim você ainda me manda bom dia. ainda me conta o dia. ainda é meu namorado favorito.</span>
+            <span>a distância não mudou nada do que eu sinto por você. 💚</span>` },
+
+    { data: '2026-04-09', meses: 4,  emoji: '💚', tag: '4 meses juntos',
+      titulo: 'quatro meses<br><em style="color:var(--green)">e ainda aqui</em>',
+      msg: `<span>quatro meses e eu tô aqui, esperando.</span>
+            <span>não tô esperando só porque preciso — tô esperando porque você vale cada dia.</span>
+            <span>feliz quatro meses, meu amor. 💚</span>` },
+
+    { data: '2026-05-09', meses: 5,  emoji: '💚', tag: '5 meses juntos',
+      titulo: 'cinco meses<br><em style="color:var(--green)">quase metade do ano</em>',
+      msg: `<span>cinco meses. quase metade de um ano inteiro com você.</span>
+            <span>eu nem percebi a vida antes de você chegar. agora não consigo imaginar sem.</span>
+            <span>logo logo a gente comemora de pertinho. tô contando os dias. 💚</span>` },
+
+    // 6 meses — ainda longe
+    { data: '2026-06-09', meses: 6,  emoji: '💚', tag: '6 meses juntos · a reta final',
+      titulo: '6 meses de<br><em style="color:var(--green)">você e eu</em>',
+      msg: `<span>meio ano inteiro com você.</span>
+            <span>seis meses de mensagem de bom dia, de ligação tarde da noite, de saudade que dói mas também aquece — porque pelo menos significa que você importa demais.</span>
+            <span>você foi embora pro intercâmbio e mesmo assim continuou sendo minha pessoa favorita do mundo. isso não é pouca coisa.</span>
+            <span style="color:#c8d0c0;font-size:14px">já faltam poucos dias pra eu te abraçar de verdade. 💚</span>` },
+
+    // dia dos namorados
+    { data: '2026-06-12', meses: null, emoji: '🌹', tag: '12 de junho · dia dos namorados',
+      titulo: 'feliz dia dos<br><em style="color:var(--green)">namorados</em>',
+      msg: `<span>você tá lá e eu tô aqui, mas hoje é nosso do mesmo jeito.</span>
+            <span>não precisei de um jantar ou de flores pra saber o quanto gosto de você — eu sinto isso toda vez que você manda uma mensagem no meio do dia só pra dizer que tá pensando em mim.</span>
+            <span>esse é meu dia dos namorados favorito. mesmo de longe. mesmo com saudade.</span>
+            <span style="color:#c8d0c0;font-size:14px">logo logo você volta e a gente comemora de pertinho. 💚🌹</span>` },
+
+    // 7 meses — ele JÁ VOLTOU (volta 11/07)
+    { data: '2026-07-09', meses: 7,  emoji: '🛬', tag: '7 meses juntos · e você voltou!',
+      titulo: 'sete meses<br><em style="color:var(--green)">juntos de verdade</em>',
+      msg: `<span>sete meses. e você tá aqui.</span>
+            <span>eu sobrevivi ao intercâmbio, você sobreviveu ao intercâmbio, e a gente sobreviveu junto.</span>
+            <span>agora me deixa te abraçar. de verdade. sem tela no meio. 💚</span>` },
+
+    { data: '2026-08-09', meses: 8,  emoji: '💚', tag: '8 meses juntos',
+      titulo: 'oito meses<br><em style="color:var(--green)">de nós</em>',
+      msg: `<span>oito meses.</span>
+            <span>já deu pra viver de tudo — de perto, de longe, separados por um oceano e reunidos de novo.</span>
+            <span>cada mês com você é meu favorito. 💚</span>` },
+
+    { data: '2026-09-09', meses: 9,  emoji: '💚', tag: '9 meses juntos',
+      titulo: 'nove meses<br><em style="color:var(--green)">e contando</em>',
+      msg: `<span>nove meses. três quartos de um ano.</span>
+            <span>eu nem lembro mais direito como era antes de você. e não quero lembrar.</span>
+            <span>obrigado por ser tão meu. 💚</span>` },
+
+    { data: '2026-10-09', meses: 10, emoji: '🍂', tag: '10 meses juntos',
+      titulo: 'dez meses<br><em style="color:var(--green)">quase lá</em>',
+      msg: `<span>dez meses.</span>
+            <span>já to vendo o fim do primeiro ano, e tô animado pra ver tudo que ainda vem depois.</span>
+            <span>você é a melhor parte de quase todo dia. 💚🍂</span>` },
+
+    { data: '2026-11-09', meses: 11, emoji: '💚', tag: '11 meses juntos · falta um!',
+      titulo: 'onze meses<br><em style="color:var(--green)">falta só um</em>',
+      msg: `<span>onze meses.</span>
+            <span>daqui a trinta dias faz um ano inteiro. eu já tô comemorando antes da hora.</span>
+            <span>você virou parte do meu rotina, do meu dia, dos meus planos. e eu não troco por nada. 💚</span>` },
+
+    // 1 ANO 🎉
+    { data: '2026-12-09', meses: 12, emoji: '🎉', tag: '09 de dezembro · 1 ano juntos!',
+      titulo: '1 ano de<br><em style="color:var(--green)">você e eu</em>',
+      msg: `<span>UM ANO.</span>
+            <span>365 dias. doze meses. um intercâmbio. saudade de sobra. ligações tarde da noite. mensagens no meio do trabalho. músicas que viraram nossas.</span>
+            <span>você foi pro outro lado do mundo e voltou. e eu tava aqui. e vou continuar estando.</span>
+            <span>feliz aniversário de namoro, meu amor. esse é só o primeiro de muitos. 💚🎉</span>` },
+];
+
+/* ── MILESTONES NO COUNTDOWN ─────────── */
+const DATA_ANIVERSARIO_6M = new Date('2026-06-09T00:00:00Z');
+const DATA_NAMORADOS      = new Date('2026-06-12T00:00:00Z');
+const DATA_1ANO           = new Date('2026-12-09T00:00:00Z');
+
+/* ── TELA DE CONTAGEM REGRESSIVA ─────── */
 
 function iniciarCountdown() {
     const screen = document.getElementById('countdown-screen');
-    const hoje = new Date();
+    const agora  = new Date();
+    if (agora >= DATA_VOLTA) return;
 
-    // Só mostra se ainda não chegou a data de volta
-    if (hoje >= DATA_VOLTA) return;
-
-    // Mostrar tela
     screen.classList.add('active');
-
-    // Partículas flutuantes no fundo
     criarParticulasCD();
-
-    // Atualizar milestones
     atualizarMilestones();
 
-    // Timer
     function tick() {
-        const agora = new Date();
-        const diff = DATA_VOLTA - agora;
-        if (diff <= 0) {
-            screen.classList.remove('active');
-            return;
-        }
+        const now  = new Date();
+        const diff = DATA_VOLTA - now;
+        if (diff <= 0) { screen.classList.remove('active'); return; }
         const d = Math.floor(diff / 864e5);
         const h = Math.floor((diff % 864e5) / 36e5);
         const m = Math.floor((diff % 36e5) / 6e4);
         const s = Math.floor((diff % 6e4) / 1e3);
-
         document.getElementById('cd-dias').textContent  = String(d).padStart(2,'0');
         document.getElementById('cd-horas').textContent = String(h).padStart(2,'0');
         document.getElementById('cd-mins').textContent  = String(m).padStart(2,'0');
         document.getElementById('cd-segs').textContent  = String(s).padStart(2,'0');
-
-        // Mini timer na celebração também
         const miniTimer = document.getElementById('cel-mini-timer');
         if (miniTimer) miniTimer.textContent = `${d} dia${d !== 1 ? 's' : ''}`;
     }
     tick();
     setInterval(tick, 1000);
 
-    // Botão entrar
     document.getElementById('cd-enter').addEventListener('click', () => {
         screen.classList.remove('active');
-        // Checar se é dia de celebração antes de mostrar welcome
         verificarCelebracao();
     });
 }
@@ -494,119 +572,80 @@ function iniciarCountdown() {
 function atualizarMilestones() {
     const agora = new Date();
 
-    // Aniversário 6 meses
-    const msAniv = document.getElementById('ms-aniversario');
-    const msAnivCount = document.getElementById('ms-aniv-count');
-    const diffAniv = DATA_ANIVERSARIO - agora;
-    if (diffAniv <= 0) {
+    const msAniv     = document.getElementById('ms-aniversario');
+    const msAnivCount= document.getElementById('ms-aniv-count');
+    const diff6m     = DATA_ANIVERSARIO_6M - agora;
+    if (diff6m <= 0) {
         msAniv.classList.add('passou');
         msAnivCount.textContent = 'já passou 💚';
     } else {
-        const dias = Math.floor(diffAniv / 864e5);
-        msAnivCount.textContent = `em ${dias} dia${dias !== 1 ? 's' : ''}`;
+        msAnivCount.textContent = `em ${Math.floor(diff6m/864e5)} dia${Math.floor(diff6m/864e5)!==1?'s':''}`;
     }
 
-    // Dia dos namorados
-    const msNamor = document.getElementById('ms-namorados');
-    const msNamorCount = document.getElementById('ms-namor-count');
-    const diffNamor = DATA_NAMORADOS - agora;
+    const msNamor     = document.getElementById('ms-namorados');
+    const msNamorCount= document.getElementById('ms-namor-count');
+    const diffNamor   = DATA_NAMORADOS - agora;
     if (diffNamor <= 0) {
         msNamor.classList.add('passou');
         msNamorCount.textContent = 'já passou 🌹';
     } else {
-        const dias = Math.floor(diffNamor / 864e5);
-        msNamorCount.textContent = `em ${dias} dia${dias !== 1 ? 's' : ''}`;
+        msNamorCount.textContent = `em ${Math.floor(diffNamor/864e5)} dia${Math.floor(diffNamor/864e5)!==1?'s':''}`;
     }
 }
 
-/* ── PARTÍCULAS NO FUNDO DO COUNTDOWN ─ */
-
+/* ── PARTÍCULAS NO COUNTDOWN ─────────── */
 function criarParticulasCD() {
     const container = document.getElementById('cd-particles');
     if (!container) return;
     const emojis = ['💚','✨','🌿','💫','🫶'];
     for (let i = 0; i < 12; i++) {
         const p = document.createElement('span');
-        p.style.cssText = `
-            position:absolute;
-            font-size:${14 + Math.random()*16}px;
-            left:${Math.random()*100}%;
-            top:${Math.random()*100}%;
-            opacity:${0.06 + Math.random()*0.1};
-            animation:particleFloat ${6+Math.random()*8}s ease-in-out infinite;
-            animation-delay:${Math.random()*5}s;
-            pointer-events:none;
-        `;
+        p.style.cssText = `position:absolute;font-size:${14+Math.random()*16}px;left:${Math.random()*100}%;top:${Math.random()*100}%;opacity:${0.06+Math.random()*0.1};animation:particleFloat ${6+Math.random()*8}s ease-in-out infinite;animation-delay:${Math.random()*5}s;pointer-events:none;`;
         p.textContent = emojis[Math.floor(Math.random()*emojis.length)];
         container.appendChild(p);
     }
-
-    // Injetar keyframe se não existe
     if (!document.getElementById('particle-style')) {
         const s = document.createElement('style');
         s.id = 'particle-style';
-        s.textContent = `
-            @keyframes particleFloat {
-                0%,100%{ transform:translateY(0) rotate(0deg); }
-                33%    { transform:translateY(-18px) rotate(8deg); }
-                66%    { transform:translateY(10px) rotate(-6deg); }
-            }
-        `;
+        s.textContent = `@keyframes particleFloat{0%,100%{transform:translateY(0) rotate(0deg);}33%{transform:translateY(-18px) rotate(8deg);}66%{transform:translateY(10px) rotate(-6deg);}}`;
         document.head.appendChild(s);
     }
 }
 
-/* ── TELA DE CELEBRAÇÃO ─────────────── */
-
+/* ── TELA DE CELEBRAÇÃO ──────────────── */
 function verificarCelebracao() {
-    const agora = new Date();
-    const hoje  = new Date().toLocaleDateString("sv-SE", {timeZone:"Europe/Paris"}); // fuso europeu
+    const hoje = new Date().toLocaleDateString('sv-SE', { timeZone: 'Europe/Paris' });
 
-    const ehAniversario = hoje === '2026-06-09';
-    const ehDiaNamorados = hoje === '2026-06-12';
-
-    if (!ehAniversario && !ehDiaNamorados) return;
+    const especial = DATAS_ESPECIAIS.find(d => d.data === hoje);
+    if (!especial) return;
 
     const screen = document.getElementById('celebration-screen');
-    const emoji  = document.getElementById('cel-emoji');
-    const tag    = document.getElementById('cel-tag');
-    const title  = document.getElementById('cel-title');
-    const msg    = document.getElementById('cel-msg');
+    document.getElementById('cel-emoji').textContent = especial.emoji;
+    document.getElementById('cel-tag').textContent   = especial.tag;
+    document.getElementById('cel-title').innerHTML   = especial.titulo;
+    document.getElementById('cel-msg').innerHTML     = especial.msg;
 
-    if (ehAniversario) {
-        emoji.textContent = '💚';
-        tag.textContent   = '09 de junho de 2026 · 6 meses juntos';
-        title.innerHTML   = '6 meses de<br><em style="color:var(--green)">você e eu</em>';
-        msg.innerHTML     = `
-            <span style="display:block;margin-bottom:12px">meio ano inteiro com você.</span>
-            <span style="display:block;margin-bottom:12px">seis meses de mensagem de bom dia, de ligação tarde da noite, de saudade que dói mas também aquece — porque pelo menos significa que você importa demais.</span>
-            <span style="display:block;margin-bottom:12px">você foi embora pro intercâmbio e mesmo assim continuou sendo minha pessoa favorita do mundo. isso não é pouca coisa.</span>
-            <span style="display:block;color:#c8d0c0;font-size:14px">já faltam poucos dias pra eu te abraçar de verdade. 💚</span>
-        `;
+    // Mini timer — só mostra se ainda não voltou
+    const miniArea = document.querySelector('.cel-countdown-mini');
+    const agora = new Date();
+    if (agora >= DATA_VOLTA || !miniArea) {
+        if (miniArea) miniArea.style.display = 'none';
     } else {
-        emoji.textContent = '🌹';
-        tag.textContent   = '12 de junho · dia dos namorados';
-        title.innerHTML   = 'feliz dia dos<br><em style="color:var(--green)">namorados</em>';
-        msg.innerHTML     = `
-            <span style="display:block;margin-bottom:12px">você tá lá e eu tô aqui, mas hoje é nosso do mesmo jeito.</span>
-            <span style="display:block;margin-bottom:12px">não precisei de um jantar ou de flores pra saber o quanto gosto de você — eu sinto isso toda vez que você manda uma mensagem no meio do dia só pra dizer que tá pensando em mim.</span>
-            <span style="display:block;margin-bottom:12px">esse é meu dia dos namorados favorito. mesmo de longe. mesmo com saudade.</span>
-            <span style="display:block;color:#c8d0c0;font-size:14px">logo logo você volta e a gente comemora de pertinho. 💚🌹</span>
-        `;
+        const dias = Math.floor((DATA_VOLTA - agora) / 864e5);
+        document.getElementById('cel-mini-timer').textContent = `${dias} dia${dias !== 1 ? 's' : ''}`;
     }
 
     screen.classList.add('active');
-
-    // Confetti
     setTimeout(() => lancarConfetti(), 400);
 
-    document.getElementById('cel-enter').addEventListener('click', () => {
-        screen.classList.remove('active');
-    });
+    const btn = document.getElementById('cel-enter');
+    // remover listeners antigos
+    const newBtn = btn.cloneNode(true);
+    btn.parentNode.replaceChild(newBtn, btn);
+    newBtn.addEventListener('click', () => screen.classList.remove('active'));
 }
 
 /* ── CONFETTI ────────────────────────── */
-
 function lancarConfetti() {
     const canvas = document.getElementById('cel-confetti');
     if (!canvas) return;
@@ -614,18 +653,13 @@ function lancarConfetti() {
     canvas.width  = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    const cores = ['#1DB954','#22e05a','#a8dfc0','#f0e8dc','#dba0b0','#ffffff'];
-    const particulas = Array.from({length: 120}, () => ({
-        x:   Math.random() * canvas.width,
-        y:   -10 - Math.random() * 200,
-        w:   4 + Math.random() * 7,
-        h:   10 + Math.random() * 12,
+    const cores = ['#1DB954','#22e05a','#a8dfc0','#f0e8dc','#dba0b0','#ffffff','#ffd700'];
+    const particulas = Array.from({length: 140}, () => ({
+        x: Math.random() * canvas.width, y: -10 - Math.random() * 200,
+        w: 4 + Math.random() * 7, h: 10 + Math.random() * 12,
         cor: cores[Math.floor(Math.random() * cores.length)],
-        vx:  (Math.random() - .5) * 3,
-        vy:  1.5 + Math.random() * 3,
-        rot: Math.random() * 360,
-        vr:  (Math.random() - .5) * 6,
-        opa: 1,
+        vx: (Math.random() - .5) * 3, vy: 1.5 + Math.random() * 3,
+        rot: Math.random() * 360, vr: (Math.random() - .5) * 6, opa: 1,
     }));
 
     let frame;
@@ -635,10 +669,7 @@ function lancarConfetti() {
         particulas.forEach(p => {
             if (p.y > canvas.height + 20) return;
             vivas++;
-            p.x   += p.vx;
-            p.y   += p.vy;
-            p.rot += p.vr;
-            p.opa -= 0.004;
+            p.x += p.vx; p.y += p.vy; p.rot += p.vr; p.opa -= 0.004;
             ctx.save();
             ctx.globalAlpha = Math.max(0, p.opa);
             ctx.translate(p.x, p.y);
@@ -653,36 +684,27 @@ function lancarConfetti() {
         else ctx.clearRect(0, 0, canvas.width, canvas.height);
     }
     draw();
-    // Segunda salva de confetti
     setTimeout(() => {
-        particulas.forEach(p => {
-            p.y = -10 - Math.random() * 200;
-            p.x = Math.random() * canvas.width;
-            p.opa = 1;
-        });
+        particulas.forEach(p => { p.y = -10 - Math.random()*200; p.x = Math.random()*canvas.width; p.opa = 1; });
         if (frame) cancelAnimationFrame(frame);
         draw();
-    }, 2000);
+    }, 2200);
 }
 
-/* ── INICIAR FLUXO ──────────────────── */
-
+/* ── INICIAR FLUXO ───────────────────── */
 window.addEventListener('load', () => {
     setTimeout(() => {
-        // Depois do loading, checar o que mostrar
         const agora = new Date();
-        const hoje  = new Date().toLocaleDateString("sv-SE", {timeZone:"Europe/Paris"}); // fuso europeu
-        const ehCelebracao = hoje === '2026-06-09' || hoje === '2026-06-12';
+        const hoje  = agora.toLocaleDateString('sv-SE', { timeZone: 'Europe/Paris' });
+        const ehCelebracao  = DATAS_ESPECIAIS.some(d => d.data === hoje);
         const ehDepoisVolta = agora >= DATA_VOLTA;
 
         if (ehDepoisVolta) {
-            // Tela de volta
+            // tela de volta já está no HTML
         } else if (ehCelebracao) {
-            // Esconder welcome, mostrar celebração direto
             document.getElementById('welcome-screen').style.display = 'none';
             verificarCelebracao();
         } else {
-            // Mostrar countdown ao entrar (depois de fechar o welcome)
             const origEnter = document.getElementById('enter-btn');
             if (origEnter) {
                 origEnter.addEventListener('click', () => {

@@ -1,5 +1,5 @@
 const CACHE_NAME =
-"before-the-exchange-v2";
+"nosso-cantinho-v7";
 
 /* instalar */
 
