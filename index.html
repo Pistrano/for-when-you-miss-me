@@ -4,14 +4,12 @@
     <link rel="manifest" href="../manifest.json">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#1DB954">
+    <meta name="theme-color" content="#0d1f12">
     <title>Nosso Cantinho 💚</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="icon" type="image/png" sizes="32x32" href="icon-32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="icon-16.png">
     <link rel="apple-touch-icon" sizes="180x180" href="icon-180.png">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -19,155 +17,307 @@
 
 <!-- LOADING -->
 <div id="loading-screen">
-    <div class="loading-content">
-        <div class="loading-heart">💚</div>
-        <h2>carregando nossas memórias...</h2>
-        <p>só um segundinho ✨</p>
+    <div class="loading-inner">
+        <div class="loading-logo">
+            <span class="logo-heart">💚</span>
+            <span class="logo-wave"></span>
+        </div>
+        <p class="loading-title">Nosso Cantinho</p>
+        <p class="loading-sub">carregando memórias...</p>
+        <div class="loading-bar"><div class="loading-fill"></div></div>
     </div>
 </div>
 
-<!-- CARTA -->
+<!-- CARTA MODAL -->
 <div id="letter-modal">
+    <div class="letter-overlay" id="letter-overlay"></div>
     <div class="letter-card">
         <button id="close-letter">✕</button>
-        <p class="letter-small">para quando a saudade apertar 💚</p>
-        <h2>Uma coisinha para você sentir...</h2>
+        <div class="letter-stamp">💌</div>
+        <p class="letter-from">para quando a saudade apertar</p>
+        <h2 class="letter-title">Uma coisinha para você sentir...</h2>
+        <div class="letter-divider"></div>
         <div class="letter-text">
             <p>Fiz essa playlist antes de você ir porque queria deixar alguma coisa minha com você.</p>
             <p>Talvez, quando a saudade bater, alguma música daqui consiga te abraçar um pouquinho.</p>
             <p>Eu sei que essa viagem está sendo importante pra você, e eu amo muito te ver vivendo tudo isso.</p>
             <p>Mas também estou sentindo saudade. Bastante, provavelmente.</p>
             <p>Então fiz esse cantinho pra você voltar quando quiser — pra ouvir, lembrar, ou só sentir um pouquinho de "nós" mesmo longe ✈️</p>
-            <p class="signature">com muito amor, seu fofuxo 💚</p>
+            <p class="signature">com muito amor,<br><em>seu fofuxo 💚</em></p>
         </div>
     </div>
 </div>
 
 <!-- WELCOME -->
 <div id="welcome-screen">
-    <div class="welcome-bg"></div>
+    <div class="welcome-bg" id="welcome-bg"></div>
+    <div class="welcome-particles" id="welcome-particles"></div>
     <div class="welcome-card">
-        <p class="small-text">✈️ Antes de você ir...</p>
-        <h1>Fiz essa playlist quando a saudade ainda nem tinha começado 💚</h1>
-        <p class="message">Talvez, quando a distância apertar, alguma música daqui consiga te fazer sentir pertinho.</p>
-        <button id="enter-btn">🎧 Abrir nossa playlist</button>
+        <div class="welcome-badge">✈️ antes de você ir</div>
+        <h1 class="welcome-title">Fiz essa playlist<br><em>só pra você</em></h1>
+        <p class="welcome-sub">pra quando a distância apertar e você precisar sentir que não tá sozinho</p>
+        <button id="enter-btn">
+            <span class="btn-icon">🎧</span>
+            <span>Abrir nossa playlist</span>
+        </button>
+        <p class="welcome-hint">💚 21 músicas escolhidas com cuidado</p>
     </div>
 </div>
 
-<!-- FUNDO -->
+<!-- FUNDO DINÂMICO -->
 <div id="background-blur"></div>
+<div id="background-overlay"></div>
 
-<!-- CORAÇÕES FLUTUANTES -->
+<!-- CORAÇÕES -->
 <div id="hearts-container"></div>
 
+<!-- APP -->
 <div class="app">
 
     <!-- SIDEBAR -->
     <aside class="sidebar">
-        <h1>♫ MyRafafy</h1>
-        <div class="menu">
-            <button>🏠 Início</button>
-            <button>🎵 Biblioteca</button>
-            <button>❤️ Curtidas</button>
+        <div class="sidebar-logo">
+            <span class="sidebar-heart">💚</span>
+            <span class="sidebar-name">MyRafafy</span>
         </div>
-    </aside>
-
-    <!-- CONTEÚDO -->
-    <main class="main-content">
-
-        <!-- HERO -->
-        <div class="hero">
-            <img src="covers/romantic.jpg" alt="Nossa playlist">
-            <div class="hero-text">
-                <p class="playlist-type">PLAYLIST ESPECIAL ✈️</p>
-                <h1>Before the Exchange</h1>
-                <p class="hero-description" id="daily-message">carregando carinho... 💚</p>
-                <div class="hero-info">
-                    <button id="open-letter">💌 abrir carta</button>
-                    <button id="saudade-btn">💚 quando sentir saudade</button>
-                    <span>🎵 21 músicas</span>
-                    <span id="contador">✈️ calculando saudade...</span>
-                    <span id="dias-passados">🥺 carregando...</span>
-                    <span id="top-song">🎧 carregando...</span>
+        <nav class="sidebar-nav">
+            <a class="nav-item active" href="#">
+                <span class="nav-icon">🏠</span>
+                <span>Início</span>
+            </a>
+            <a class="nav-item" href="#">
+                <span class="nav-icon">🎵</span>
+                <span>Biblioteca</span>
+            </a>
+            <a class="nav-item" href="#">
+                <span class="nav-icon">❤️</span>
+                <span>Curtidas</span>
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <div class="sidebar-stats">
+                <div class="stat-item">
+                    <span class="stat-num" id="sb-dias">—</span>
+                    <span class="stat-label">dias longe</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <span class="stat-num">21</span>
+                    <span class="stat-label">músicas</span>
                 </div>
             </div>
         </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main-content">
+
+        <!-- HERO NOVO — cover grande, gradiente -->
+        <section class="hero">
+            <div class="hero-cover-wrap">
+                <img id="hero-cover" src="covers/romantic.jpg" alt="Nossa playlist">
+                <div class="hero-cover-glow"></div>
+            </div>
+            <div class="hero-content">
+                <span class="hero-tag">PLAYLIST ESPECIAL ✈️</span>
+                <h1 class="hero-title">Before the<br><em>Exchange</em></h1>
+                <p class="hero-msg" id="daily-message">carregando carinho... 💚</p>
+
+                <!-- STATS ROW -->
+                <div class="hero-stats">
+                    <div class="hstat">
+                        <span class="hstat-val" id="contador">—</span>
+                        <span class="hstat-lbl">faltam</span>
+                    </div>
+                    <div class="hstat">
+                        <span class="hstat-val" id="dias-passados">—</span>
+                        <span class="hstat-lbl">longe</span>
+                    </div>
+                    <div class="hstat">
+                        <span class="hstat-val" id="top-song-val">—</span>
+                        <span class="hstat-lbl">mais tocada</span>
+                    </div>
+                </div>
+
+                <!-- BOTÕES HERO -->
+                <div class="hero-actions">
+                    <button class="btn-primary" id="play-hero">
+                        <span>▶</span> Tocar tudo
+                    </button>
+                    <button class="btn-ghost" id="saudade-btn">
+                        💚 sentindo saudade
+                    </button>
+                    <button class="btn-ghost btn-letter" id="open-letter">
+                        💌 carta
+                    </button>
+                </div>
+            </div>
+        </section>
 
         <!-- BUSCA -->
-        <div class="top-bar">
+        <div class="search-bar">
+            <span class="search-icon">🔍</span>
             <input type="text" id="search-input" placeholder="Buscar música ou artista...">
+            <span class="search-count" id="search-count">21 músicas</span>
         </div>
 
-        <h2>Sua Playlist</h2>
+        <!-- PLAYLIST TÍTULO -->
+        <div class="section-header">
+            <h2>Sua Playlist</h2>
+            <span class="section-sub">cada uma escolhida com amor</span>
+        </div>
+
         <div id="playlist" class="playlist"></div>
 
     </main>
 </div>
 
-<!-- PLAYER -->
-<div class="player">
-    <div class="progress-area">
-        <input type="range" id="progress" value="0">
-        <div class="time-display">
-            <span id="time-current">0:00</span>
-            <span id="time-total">0:00</span>
+<!-- PLAYER REDESENHADO -->
+<div class="player" id="player">
+    <!-- barra de progresso toda a largura no topo -->
+    <div class="player-progress">
+        <span class="time" id="time-current">0:00</span>
+        <div class="progress-track">
+            <input type="range" id="progress" value="0" min="0" max="100" step="0.1">
+            <div class="progress-fill" id="progress-fill"></div>
+        </div>
+        <span class="time" id="time-total">0:00</span>
+    </div>
+
+    <div class="player-body">
+        <!-- ESQUERDA: info -->
+        <div class="player-info">
+            <div class="player-cover-wrap">
+                <img id="cover" src="" alt="">
+                <div class="player-cover-ring"></div>
+            </div>
+            <div class="player-text">
+                <p class="player-title" id="title">Nenhuma música</p>
+                <p class="player-artist" id="artist">Selecione uma música</p>
+                <p class="player-msg" id="music-message"></p>
+            </div>
+        </div>
+
+        <!-- CENTRO: controles -->
+        <div class="player-controls">
+            <button class="ctrl-btn" id="shuffle" title="Aleatório">🔀</button>
+            <button class="ctrl-btn" id="prev" title="Anterior">⏮</button>
+            <button class="ctrl-btn ctrl-play" id="play">▶</button>
+            <button class="ctrl-btn" id="next" title="Próxima">⏭</button>
+            <button class="ctrl-btn" id="repeat" title="Repetir">🔁</button>
+        </div>
+
+        <!-- DIREITA: volume -->
+        <div class="player-vol">
+            <span class="vol-icon">🔊</span>
+            <input type="range" id="volume" min="0" max="100" value="100">
         </div>
     </div>
-
-    <div class="player-left">
-        <img id="cover" src="">
-        <div class="music-info">
-            <h3 id="title">Nenhuma música</h3>
-            <p id="artist">Selecione uma música</p>
-            <p id="music-message"></p>
-        </div>
-    </div>
-
-    <div class="player-center">
-        <div class="controls">
-            <button id="shuffle" title="Aleatório">🔀</button>
-            <button id="prev" title="Anterior">⏮</button>
-            <button id="play" title="Play/Pause">▶</button>
-            <button id="next" title="Próxima">⏭</button>
-            <button id="repeat" title="Repetir">🔁</button>
-        </div>
-    </div>
-
-    <div class="volume-control">
-        <span>🔊</span>
-        <input type="range" id="volume" min="0" max="100" value="100">
-    </div>
-
-    <audio id="audio"></audio>
 </div>
 
-<!-- MEMORY POPUP -->
-<div id="memory-popup">
-    <img id="memory-photo" src="">
-    <div class="memory-text">
-        <p class="memory-small">💚 lembrança desbloqueada</p>
+<!-- MEMORY TOAST -->
+<div id="memory-popup" class="toast">
+    <img id="memory-photo" src="" alt="">
+    <div class="toast-text">
+        <p class="toast-label">💚 lembrança</p>
         <p id="memory-message">lembrei desse dia</p>
     </div>
 </div>
 
-<!-- SAUDADE POPUP -->
-<div id="saudade-popup">
-    <p class="saudade-small">💚 pra quando apertar</p>
-    <p>tô aqui com você.</p>
+<!-- SAUDADE TOAST -->
+<div id="saudade-popup" class="toast toast-top">
+    <span class="toast-icon">💚</span>
+    <div class="toast-text">
+        <p class="toast-label">pra quando apertar</p>
+        <p>tô aqui com você.</p>
+    </div>
 </div>
 
-<!-- RETURN SCREEN -->
+<!-- RETURN -->
 <div id="return-screen">
     <div class="return-card">
         <img src="covers/PHOTO-2026-05-26-13-39-36 2.jpg" alt="Nós">
-        <p class="return-small">🛬 finalmente</p>
-        <h1>você voltou 💚</h1>
-        <p class="return-message">a distância acabou.<br>agora você tá aqui de novo.</p>
+        <p class="return-tag">🛬 finalmente</p>
+        <h1>você voltou<br><em>💚</em></h1>
+        <p class="return-msg">a distância acabou.<br>agora você tá aqui de novo.</p>
         <p class="return-sub">obrigado por voltar pra nós ✨</p>
     </div>
 </div>
 
+<!-- CONTAGEM REGRESSIVA DA VOLTA -->
+<div id="countdown-screen">
+    <div class="cd-bg" id="cd-bg"></div>
+    <div class="cd-particles" id="cd-particles"></div>
+    <div class="cd-card">
+        <div class="cd-top">
+            <span class="cd-plane">✈️</span>
+            <p class="cd-label">ele volta em</p>
+        </div>
+        <div class="cd-timer">
+            <div class="cd-unit">
+                <span class="cd-num" id="cd-dias">00</span>
+                <span class="cd-unit-lbl">dias</span>
+            </div>
+            <span class="cd-sep">:</span>
+            <div class="cd-unit">
+                <span class="cd-num" id="cd-horas">00</span>
+                <span class="cd-unit-lbl">horas</span>
+            </div>
+            <span class="cd-sep">:</span>
+            <div class="cd-unit">
+                <span class="cd-num" id="cd-mins">00</span>
+                <span class="cd-unit-lbl">minutos</span>
+            </div>
+            <span class="cd-sep">:</span>
+            <div class="cd-unit">
+                <span class="cd-num" id="cd-segs">00</span>
+                <span class="cd-unit-lbl">segundos</span>
+            </div>
+        </div>
+        <p class="cd-date">11 de julho de 2026</p>
+        <div class="cd-divider"></div>
+        <p class="cd-msg">cada segundo que passa<br>é um segundo mais perto de você 💚</p>
+        <div class="cd-milestones">
+            <div class="cd-milestone" id="ms-aniversario">
+                <span class="ms-icon">💚</span>
+                <div class="ms-text">
+                    <p class="ms-title">6 meses juntos</p>
+                    <p class="ms-date">09 de junho · <span id="ms-aniv-count"></span></p>
+                </div>
+            </div>
+            <div class="cd-milestone" id="ms-namorados">
+                <span class="ms-icon">🌹</span>
+                <div class="ms-text">
+                    <p class="ms-title">dia dos namorados</p>
+                    <p class="ms-date">12 de junho · <span id="ms-namor-count"></span></p>
+                </div>
+            </div>
+        </div>
+        <button class="cd-enter" id="cd-enter">🎧 entrar na playlist</button>
+    </div>
+</div>
+
+<!-- CELEBRAÇÃO — aparece no 09/06 e 12/06 -->
+<div id="celebration-screen">
+    <div class="cel-bg" id="cel-bg"></div>
+    <canvas id="cel-confetti"></canvas>
+    <div class="cel-card">
+        <div class="cel-emoji" id="cel-emoji">💚</div>
+        <p class="cel-tag" id="cel-tag">hoje é especial</p>
+        <h1 class="cel-title" id="cel-title">título</h1>
+        <div class="cel-hearts-row">
+            <span>💚</span><span>🫶</span><span>💚</span><span>🌿</span><span>💚</span>
+        </div>
+        <p class="cel-msg" id="cel-msg">mensagem aqui</p>
+        <div class="cel-countdown-mini">
+            <p class="cel-mini-label">ele volta em</p>
+            <p class="cel-mini-timer" id="cel-mini-timer">— dias</p>
+        </div>
+        <button class="cel-btn" id="cel-enter">💚 abrir nossa playlist</button>
+    </div>
+</div>
+
+<audio id="audio"></audio>
 <script src="script.js"></script>
 </body>
 </html>
-<!-- teste github -->

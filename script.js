@@ -1,50 +1,57 @@
 /* =============================================
-   NOSSO CANTINHO 💚 — script.js v3
+   NOSSO CANTINHO 💚 — script.js v4
    ============================================= */
 
 /* ── ELEMENTOS ─────────────────────── */
-const musicMessage   = document.getElementById('music-message');
-const volume         = document.getElementById('volume');
-const topSong        = document.getElementById('top-song');
-const diasPassados   = document.getElementById('dias-passados');
-const memoryPopup    = document.getElementById('memory-popup');
-const saudadeBtn     = document.getElementById('saudade-btn');
-const saudadePopup   = document.getElementById('saudade-popup');
-const dailyMessage   = document.getElementById('daily-message');
-const memoryPhoto    = document.getElementById('memory-photo');
-const memoryMessage  = document.getElementById('memory-message');
-const welcomeScreen  = document.getElementById('welcome-screen');
-const enterBtn       = document.getElementById('enter-btn');
-const playlist       = document.getElementById('playlist');
-const audio          = document.getElementById('audio');
-const background     = document.getElementById('background-blur');
-const playBtn        = document.getElementById('play');
-const nextBtn        = document.getElementById('next');
-const prevBtn        = document.getElementById('prev');
-const shuffleBtn     = document.getElementById('shuffle');
-const repeatBtn      = document.getElementById('repeat');
-const progress       = document.getElementById('progress');
-const cover          = document.getElementById('cover');
-const titleEl        = document.getElementById('title');
-const artistEl       = document.getElementById('artist');
-const contador       = document.getElementById('contador');
-const letterModal    = document.getElementById('letter-modal');
-const openLetter     = document.getElementById('open-letter');
-const closeLetter    = document.getElementById('close-letter');
-const searchInput    = document.getElementById('search-input');
-const timeCurrent    = document.getElementById('time-current');
-const timeTotal      = document.getElementById('time-total');
+const musicMessage    = document.getElementById('music-message');
+const volumeEl        = document.getElementById('volume');
+const topSongVal      = document.getElementById('top-song-val');
+const diasPassadosEl  = document.getElementById('dias-passados');
+const memoryPopup     = document.getElementById('memory-popup');
+const saudadeBtn      = document.getElementById('saudade-btn');
+const saudadePopup    = document.getElementById('saudade-popup');
+const dailyMessage    = document.getElementById('daily-message');
+const memoryPhoto     = document.getElementById('memory-photo');
+const memoryMessage   = document.getElementById('memory-message');
+const welcomeScreen   = document.getElementById('welcome-screen');
+const enterBtn        = document.getElementById('enter-btn');
+const playlistEl      = document.getElementById('playlist');
+const audio           = document.getElementById('audio');
+const background      = document.getElementById('background-blur');
+const heroCover       = document.getElementById('hero-cover');
+const playBtn         = document.getElementById('play');
+const nextBtn         = document.getElementById('next');
+const prevBtn         = document.getElementById('prev');
+const shuffleBtn      = document.getElementById('shuffle');
+const repeatBtn       = document.getElementById('repeat');
+const progressEl      = document.getElementById('progress');
+const progressFill    = document.getElementById('progress-fill');
+const cover           = document.getElementById('cover');
+const coverWrap       = cover ? cover.parentElement : null;
+const titleEl         = document.getElementById('title');
+const artistEl        = document.getElementById('artist');
+const contadorEl      = document.getElementById('contador');
+const letterModal     = document.getElementById('letter-modal');
+const openLetter      = document.getElementById('open-letter');
+const closeLetter     = document.getElementById('close-letter');
+const letterOverlay   = document.getElementById('letter-overlay');
+const searchInput     = document.getElementById('search-input');
+const searchCount     = document.getElementById('search-count');
+const timeCurrent     = document.getElementById('time-current');
+const timeTotal       = document.getElementById('time-total');
 const heartsContainer = document.getElementById('hearts-container');
+const playHero        = document.getElementById('play-hero');
+const sbDias          = document.getElementById('sb-dias');
 
-let musicas      = [];
-let musicaAtual  = 0;
-let tocando      = false;
+let musicas       = [];
+let musicaAtual   = 0;
+let tocando       = false;
 let modoAleatorio = false;
-let modoRepetir  = false;
+let modoRepetir   = false;
 
 /* ── DATAS ─────────────────────────── */
-const DATA_IDA    = new Date('2026-05-26T00:00:00');
-const DATA_VOLTA  = new Date('2026-07-11T00:00:00');
+const DATA_IDA   = new Date('2026-02-09T00:00:00Z'); // UTC
+const DATA_VOLTA = new Date('2026-07-11T00:00:00Z'); // UTC
 
 /* ── FORMATAR TEMPO ────────────────── */
 function formatTime(sec) {
@@ -54,27 +61,28 @@ function formatTime(sec) {
     return `${m}:${s}`;
 }
 
-/* ── BUSCAR MÚSICAS ────────────────── */
+/* ── CARREGAR DB ───────────────────── */
 fetch('db.json')
     .then(r => r.json())
     .then(data => {
         musicas = data;
         renderPlaylist(musicas);
         atualizarTopSong();
+        if (searchCount) searchCount.textContent = `${musicas.length} músicas`;
 
-        // Retomar última música
         const saved = localStorage.getItem('ultimaMusica');
         if (saved !== null) {
             const idx = parseInt(saved);
             if (!isNaN(idx) && idx < musicas.length) {
                 musicaAtual = idx;
                 const m = musicas[idx];
-                titleEl.textContent  = m.titulo;
-                artistEl.textContent = m.artista;
-                cover.src = `covers/${m.capa}`;
-                audio.src = `musics/${m.arquivo}`;
-                musicMessage.textContent = m.mensagem || '';
+                titleEl.textContent   = m.titulo;
+                artistEl.textContent  = m.artista;
+                cover.src             = `covers/${m.capa}`;
+                audio.src             = `musics/${m.arquivo}`;
+                if (musicMessage) musicMessage.textContent = m.mensagem || '';
                 background.style.backgroundImage = `url(covers/${m.capa})`;
+                if (heroCover) heroCover.src = `covers/${m.capa}`;
                 atualizarCardAtivo();
             }
         }
@@ -82,8 +90,8 @@ fetch('db.json')
 
 /* ── RENDERIZAR PLAYLIST ───────────── */
 function renderPlaylist(lista) {
-    playlist.innerHTML = '';
-    lista.forEach((musica, index) => {
+    playlistEl.innerHTML = '';
+    lista.forEach(musica => {
         const realIndex = musicas.indexOf(musica);
         const card = document.createElement('div');
         card.classList.add('card');
@@ -92,51 +100,46 @@ function renderPlaylist(lista) {
             <h3>${musica.titulo}</h3>
             <p>${musica.artista}</p>
         `;
-        card.addEventListener('click', () => {
-            carregarMusica(realIndex);
-        });
-        playlist.appendChild(card);
+        card.addEventListener('click', () => carregarMusica(realIndex));
+        playlistEl.appendChild(card);
     });
     if (lista.length === 0) {
-        playlist.innerHTML = '<p style="color:#666;padding:20px;grid-column:1/-1">nenhuma música encontrada 🥺</p>';
+        playlistEl.innerHTML = '<p style="color:#555;padding:24px;grid-column:1/-1;text-align:center">nenhuma música encontrada 🥺</p>';
     }
     atualizarCardAtivo();
 }
 
-/* ── BUSCA (título + artista) ──────── */
+/* ── BUSCA ─────────────────────────── */
 searchInput.addEventListener('input', () => {
     const q = searchInput.value.toLowerCase().trim();
-    if (!q) { renderPlaylist(musicas); return; }
-    const filtradas = musicas.filter(m =>
-        m.titulo.toLowerCase().includes(q) ||
-        m.artista.toLowerCase().includes(q)
-    );
+    const filtradas = q
+        ? musicas.filter(m => m.titulo.toLowerCase().includes(q) || m.artista.toLowerCase().includes(q))
+        : musicas;
     renderPlaylist(filtradas);
+    if (searchCount) searchCount.textContent = `${filtradas.length} música${filtradas.length !== 1 ? 's' : ''}`;
 });
 
 /* ── CARREGAR MÚSICA ───────────────── */
 function carregarMusica(index) {
-
     function trocarMusica() {
         musicaAtual = index;
         const musica = musicas[index];
 
-        audio.src    = `musics/${musica.arquivo}`;
-        cover.src    = `covers/${musica.capa}`;
+        audio.src   = `musics/${musica.arquivo}`;
+        cover.src   = `covers/${musica.capa}`;
+        if (heroCover) heroCover.src = `covers/${musica.capa}`;
         background.style.backgroundImage = `url(covers/${musica.capa})`;
         titleEl.textContent  = musica.titulo;
         artistEl.textContent = musica.artista;
-        musicMessage.textContent = musica.mensagem || '';
+        if (musicMessage) musicMessage.textContent = musica.mensagem || '';
 
-        // Salvar no localStorage
         localStorage.setItem('ultimaMusica', index);
 
-        // Media Session (lockscreen)
         if ('mediaSession' in navigator) {
             navigator.mediaSession.metadata = new MediaMetadata({
                 title:  musica.titulo,
                 artist: musica.artista,
-                album:  'For When You Miss Me 💚',
+                album:  'Nosso Cantinho 💚',
                 artwork: [{ src: `covers/${musica.capa}`, sizes: '512x512', type: 'image/jpeg' }]
             });
             navigator.mediaSession.setActionHandler('play',          () => audio.play());
@@ -151,30 +154,27 @@ function carregarMusica(index) {
         audio.volume = 0;
         audio.play();
 
+        const alvo = volumeEl.value / 100;
         const fadeIn = setInterval(() => {
-            if (audio.volume < 0.95) {
-                audio.volume = Math.min(audio.volume + 0.05, volume.value / 100);
+            if (audio.volume < alvo - 0.05) {
+                audio.volume = Math.min(audio.volume + 0.05, alvo);
             } else {
-                audio.volume = volume.value / 100;
+                audio.volume = alvo;
                 clearInterval(fadeIn);
             }
         }, 40);
 
         tocando = true;
-        playBtn.innerHTML = '❚❚';
+        playBtn.textContent = '❚❚';
         syncVisuals();
         atualizarCardAtivo();
     }
 
-    // Crossfade
-    if (audio.src && !audio.paused) {
+    // crossfade
+    if (audio.src && !audio.paused && audio.volume > 0) {
         const fadeOut = setInterval(() => {
-            if (audio.volume > 0.05) {
-                audio.volume -= 0.05;
-            } else {
-                clearInterval(fadeOut);
-                trocarMusica();
-            }
+            if (audio.volume > 0.06) { audio.volume -= 0.06; }
+            else { clearInterval(fadeOut); trocarMusica(); }
         }, 40);
     } else {
         trocarMusica();
@@ -183,18 +183,20 @@ function carregarMusica(index) {
 
 /* ── PLAY / PAUSE ──────────────────── */
 playBtn.addEventListener('click', () => {
-    if (navigator.vibrate) navigator.vibrate(25);
+    if (navigator.vibrate) navigator.vibrate(20);
     if (!audio.src) return;
-    if (tocando) {
-        audio.pause();
-        playBtn.innerHTML = '▶';
-    } else {
-        audio.play();
-        playBtn.innerHTML = '❚❚';
-    }
+    if (tocando) { audio.pause(); } else { audio.play(); }
     tocando = !tocando;
     syncVisuals();
 });
+
+/* ── PLAY HERO BUTTON ──────────────── */
+if (playHero) {
+    playHero.addEventListener('click', () => {
+        if (!tocando && musicas.length) carregarMusica(musicaAtual || 0);
+        else if (tocando) { audio.pause(); tocando = false; syncVisuals(); }
+    });
+}
 
 /* ── SHUFFLE ───────────────────────── */
 shuffleBtn.addEventListener('click', () => {
@@ -209,111 +211,85 @@ repeatBtn.addEventListener('click', () => {
     audio.loop = modoRepetir;
 });
 
-/* ── NEXT ──────────────────────────── */
-nextBtn.addEventListener('click', () => {
-    if (navigator.vibrate) navigator.vibrate(20);
-    tocarProxima();
-});
-
-/* ── PREV ──────────────────────────── */
+/* ── NEXT / PREV ───────────────────── */
+nextBtn.addEventListener('click', () => { if (navigator.vibrate) navigator.vibrate(15); tocarProxima(); });
 prevBtn.addEventListener('click', () => {
-    if (navigator.vibrate) navigator.vibrate(20);
-    if (audio.currentTime > 3) {
-        audio.currentTime = 0; return;
-    }
+    if (navigator.vibrate) navigator.vibrate(15);
+    if (audio.currentTime > 3) { audio.currentTime = 0; return; }
     musicaAtual = (musicaAtual - 1 + musicas.length) % musicas.length;
     carregarMusica(musicaAtual);
 });
 
-/* ── ENDED ─────────────────────────── */
-audio.addEventListener('ended', () => {
-    if (!modoRepetir) tocarProxima();
-});
+audio.addEventListener('ended', () => { if (!modoRepetir) tocarProxima(); });
 
-/* ── PRÓXIMA ───────────────────────── */
 function tocarProxima() {
-    if (modoAleatorio) {
-        musicaAtual = Math.floor(Math.random() * musicas.length);
-    } else {
-        musicaAtual = (musicaAtual + 1) % musicas.length;
-    }
+    musicaAtual = modoAleatorio
+        ? Math.floor(Math.random() * musicas.length)
+        : (musicaAtual + 1) % musicas.length;
     carregarMusica(musicaAtual);
 }
 
 /* ── CARD ATIVO ────────────────────── */
 function atualizarCardAtivo() {
-    document.querySelectorAll('.card').forEach((card, i) => {
-        // match against real index since filtered list may differ
+    document.querySelectorAll('.card').forEach(card => {
         const img = card.querySelector('img');
-        const isActive = img && musicas[musicaAtual] &&
-            img.src.includes(musicas[musicaAtual].capa);
-        card.classList.toggle('active', isActive);
+        const ativo = img && musicas[musicaAtual] && img.src.includes(encodeURIComponent(musicas[musicaAtual].capa).replace(/%20/g,' '));
+        card.classList.toggle('active', ativo);
     });
 }
 
-/* ── PROGRESS + TEMPO ──────────────── */
+/* ── PROGRESS ──────────────────────── */
 audio.addEventListener('timeupdate', () => {
     const pct = (audio.currentTime / audio.duration) * 100 || 0;
-    progress.value = pct;
-    progress.style.setProperty('--progress', `${pct}%`);
-    timeCurrent.textContent = formatTime(audio.currentTime);
+    progressEl.value = pct;
+    if (progressFill) progressFill.style.width = `${pct}%`;
+    if (timeCurrent) timeCurrent.textContent = formatTime(audio.currentTime);
 });
 
 audio.addEventListener('loadedmetadata', () => {
-    timeTotal.textContent = formatTime(audio.duration);
+    if (timeTotal) timeTotal.textContent = formatTime(audio.duration);
 });
 
-progress.addEventListener('input', () => {
-    if (audio.duration) {
-        audio.currentTime = (progress.value / 100) * audio.duration;
-    }
+progressEl.addEventListener('input', () => {
+    if (audio.duration) audio.currentTime = (progressEl.value / 100) * audio.duration;
 });
 
 /* ── WELCOME ───────────────────────── */
 enterBtn.addEventListener('click', () => {
     welcomeScreen.style.opacity = '0';
-    setTimeout(() => welcomeScreen.style.display = 'none', 600);
+    setTimeout(() => welcomeScreen.style.display = 'none', 700);
 });
 
 /* ── CONTADOR FALTAM ───────────────── */
 function atualizarContador() {
     const agora = new Date();
     const diff  = DATA_VOLTA - agora;
-
     if (diff <= 0) {
-        contador.innerHTML = '💚 ele voltou!';
+        if (contadorEl) contadorEl.textContent = 'voltou! 💚';
         return;
     }
-    const dias  = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const horas = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const mins  = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    contador.innerHTML = `✈️ faltam ${dias}d • ${horas}h • ${mins}min`;
+    const dias  = Math.floor(diff / 864e5);
+    const horas = Math.floor((diff % 864e5) / 36e5);
+    const mins  = Math.floor((diff % 36e5) / 6e4);
+    if (contadorEl) contadorEl.textContent = `${dias}d ${horas}h ${mins}min`;
 }
-
 atualizarContador();
 setInterval(atualizarContador, 1000);
 
-/* ── CONTADOR DIAS PASSADOS ────────── */
+/* ── DIAS PASSADOS ─────────────────── */
 function atualizarDiasPassados() {
-    const agora = new Date();
-    const diff  = agora - DATA_IDA;
-    const dias  = Math.floor(diff / (1000 * 60 * 60 * 24));
-    if (dias <= 0) {
-        diasPassados.innerHTML = '💚 hoje ele foi';
-    } else {
-        diasPassados.innerHTML = `🥺 já faz ${dias} dia${dias === 1 ? '' : 's'}`;
-    }
+    const _agora = new Date(); const _meia = new Date(Date.UTC(_agora.getUTCFullYear(),_agora.getUTCMonth(),_agora.getUTCDate())); const dias = Math.max(0, Math.floor((_meia - DATA_IDA) / 864e5));
+    const txt  = dias === 0 ? 'hoje foi' : `${dias} dia${dias === 1 ? '' : 's'}`;
+    if (diasPassadosEl) diasPassadosEl.textContent = txt;
+    if (sbDias) sbDias.textContent = dias;
 }
-
 atualizarDiasPassados();
 setInterval(atualizarDiasPassados, 60000);
 
 /* ── CARTA ─────────────────────────── */
-openLetter.addEventListener('click',  () => letterModal.classList.add('active'));
+openLetter.addEventListener('click', () => letterModal.classList.add('active'));
 closeLetter.addEventListener('click', () => letterModal.classList.remove('active'));
-letterModal.addEventListener('click', (e) => {
-    if (e.target === letterModal) letterModal.classList.remove('active');
-});
+if (letterOverlay) letterOverlay.addEventListener('click', () => letterModal.classList.remove('active'));
 
 /* ── MODO SAUDADE ──────────────────── */
 function ativarModoSaudade() {
@@ -326,53 +302,48 @@ setInterval(ativarModoSaudade, 60000);
 /* ── BOTÃO SAUDADE ─────────────────── */
 saudadeBtn.addEventListener('click', () => {
     if (navigator.vibrate) navigator.vibrate([50, 30, 50]);
-
     document.body.classList.add('saudade-mode');
-
     saudadePopup.classList.add('show');
     setTimeout(() => saudadePopup.classList.remove('show'), 3500);
-
-    // Lançar corações 💚
     lancarCoracoes();
-
-    // Tocar Still With You
     const idx = musicas.findIndex(m => m.titulo.toLowerCase().includes('still with you'));
     if (idx !== -1) carregarMusica(idx);
+    else if (musicas.length) carregarMusica(0);
 });
 
-/* ── CORAÇÕES FLUTUANTES ───────────── */
+/* ── CORAÇÕES ──────────────────────── */
 function lancarCoracoes() {
-    const emojis = ['💚', '🫶', '💚', '💚', '🌿', '💚'];
-    for (let i = 0; i < 18; i++) {
+    const emojis = ['💚','🫶','💚','💚','🌿','💚','✨'];
+    for (let i = 0; i < 22; i++) {
         setTimeout(() => {
-            const heart = document.createElement('span');
-            heart.className = 'floating-heart';
-            heart.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-            heart.style.left  = `${10 + Math.random() * 80}vw`;
-            heart.style.fontSize = `${16 + Math.random() * 22}px`;
-            heart.style.animationDuration = `${2.2 + Math.random() * 1.8}s`;
-            heart.style.animationDelay   = `${Math.random() * 0.4}s`;
-            heartsContainer.appendChild(heart);
-            heart.addEventListener('animationend', () => heart.remove());
-        }, i * 80);
+            const h = document.createElement('span');
+            h.className = 'floating-heart';
+            h.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+            h.style.left  = `${5 + Math.random() * 90}vw`;
+            h.style.fontSize = `${14 + Math.random() * 24}px`;
+            h.style.animationDuration = `${2 + Math.random() * 2}s`;
+            h.style.animationDelay    = `${Math.random() * 0.3}s`;
+            heartsContainer.appendChild(h);
+            h.addEventListener('animationend', () => h.remove());
+        }, i * 70);
     }
 }
 
 /* ── MEMÓRIAS ──────────────────────── */
 function mostrarMemoria(musica) {
+    if (!memoryPopup) return;
     memoryPhoto.src = `covers/${musica.capa}`;
-    memoryMessage.textContent = musica.mensagem || 'lembrei desse dia 💚';
+    if (memoryMessage) memoryMessage.textContent = musica.mensagem || 'lembrei desse dia 💚';
     memoryPopup.classList.add('show');
-    clearTimeout(window.memoryTimeout);
-    window.memoryTimeout = setTimeout(() => memoryPopup.classList.remove('show'), 5000);
+    clearTimeout(window._memTimer);
+    window._memTimer = setTimeout(() => memoryPopup.classList.remove('show'), 5000);
 }
 
-/* ── RETURN SCREEN ─────────────────── */
+/* ── RETURN ────────────────────────── */
 function verificarRetorno() {
     if (new Date() >= DATA_VOLTA) {
-        document.getElementById('return-screen').style.display = 'flex';
-        document.querySelector('.hero h1').textContent = 'Welcome Home 💚';
-        document.querySelector('#daily-message').textContent = 'a distância acabou.';
+        const rs = document.getElementById('return-screen');
+        if (rs) rs.style.display = 'flex';
     }
 }
 verificarRetorno();
@@ -392,10 +363,9 @@ const mensagensDoDia = [
     '🌎 onde você estiver hoje, tô pensando em você',
     '💚 você ainda é meu lugar favorito',
 ];
-
 function atualizarMensagemDoDia() {
-    const idx = Math.floor(new Date().getTime() / (1000 * 60 * 60 * 24)) % mensagensDoDia.length;
-    dailyMessage.textContent = mensagensDoDia[idx];
+    const idx = Math.floor(Date.now() / 864e5) % mensagensDoDia.length;
+    if (dailyMessage) dailyMessage.textContent = mensagensDoDia[idx];
 }
 atualizarMensagemDoDia();
 
@@ -406,80 +376,319 @@ function salvarHistorico(titulo) {
     localStorage.setItem('musicasOuvidas', JSON.stringify(h));
     atualizarTopSong();
 }
-
 function atualizarTopSong() {
     const h = JSON.parse(localStorage.getItem('musicasOuvidas') || '{}');
     const entries = Object.entries(h);
-    if (!entries.length) { topSong.textContent = '🎧 ainda sem favorita'; return; }
-    const [nome, vezes] = entries.sort((a, b) => b[1] - a[1])[0];
-    topSong.textContent = `🎧 ${nome} (${vezes}x)`;
+    if (!entries.length) { if (topSongVal) topSongVal.textContent = '—'; return; }
+    const [nome] = entries.sort((a,b) => b[1]-a[1])[0];
+    const curto = nome.length > 18 ? nome.slice(0,16)+'…' : nome;
+    if (topSongVal) topSongVal.textContent = curto;
 }
 
 /* ── VOLUME ────────────────────────── */
-volume.addEventListener('input', () => { audio.volume = volume.value / 100; });
+volumeEl.addEventListener('input', () => { audio.volume = volumeEl.value / 100; });
 
 /* ── SYNC VISUAIS ──────────────────── */
 function syncVisuals() {
+    playBtn.textContent = tocando ? '❚❚' : '▶';
     playBtn.classList.toggle('tocando', tocando);
-    cover.classList.toggle('tocando',  tocando);
+    if (coverWrap) coverWrap.classList.toggle('tocando', tocando);
+    if (playHero) playHero.querySelector('span').textContent = tocando ? '❚❚' : '▶';
 }
 
-audio.addEventListener('play',  () => { tocando = true;  playBtn.innerHTML = '❚❚'; syncVisuals(); });
-audio.addEventListener('pause', () => { tocando = false; playBtn.innerHTML = '▶';  syncVisuals(); });
+audio.addEventListener('play',  () => { tocando = true;  syncVisuals(); });
+audio.addEventListener('pause', () => { tocando = false; syncVisuals(); });
 
 /* ── LOADING ───────────────────────── */
 window.addEventListener('load', () => {
-    setTimeout(() => {
-        document.getElementById('loading-screen').classList.add('hide');
-    }, 1800);
+    setTimeout(() => document.getElementById('loading-screen').classList.add('hide'), 1800);
 });
 
 /* ── SERVICE WORKER ────────────────── */
 if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/service-worker.js')
-            .then(() => console.log('offline ativo 💚'))
-            .catch(e => console.log('erro sw', e));
+    navigator.serviceWorker.register('/service-worker.js').catch(() => {});
+}
+
+/* ── NOTIFICAÇÕES DIÁRIAS ──────────── */
+async function pedirPermissaoNotificacao() {
+    if (!('Notification' in window)) return;
+    if (Notification.permission === 'default') await Notification.requestPermission();
+    agendarNotificacaoDiaria();
+}
+function agendarNotificacaoDiaria() {
+    if (Notification.permission !== 'granted') return;
+    const hoje = new Date().toDateString();
+    if (localStorage.getItem('ultimaNotificacao') === hoje) return;
+    const idx = Math.floor(Date.now() / 864e5) % mensagensDoDia.length;
+    const alvo = new Date(); alvo.setHours(9,0,0,0);
+    if (alvo <= new Date()) alvo.setDate(alvo.getDate()+1);
+    setTimeout(() => {
+        new Notification('Nosso Cantinho 💚', {
+            body: mensagensDoDia[idx],
+            icon: 'icon-192.png',
+        });
+        localStorage.setItem('ultimaNotificacao', new Date().toDateString());
+        agendarNotificacaoDiaria();
+    }, alvo - new Date());
+}
+setTimeout(pedirPermissaoNotificacao, 3000);
+
+/* ═══════════════════════════════════════
+   DATAS ESPECIAIS
+═══════════════════════════════════════ */
+
+const DATA_ANIVERSARIO = new Date('2026-06-09T00:00:00Z');
+const DATA_NAMORADOS   = new Date('2026-06-12T00:00:00Z');
+
+/* ── TELA DE CONTAGEM REGRESSIVA ────── */
+
+function iniciarCountdown() {
+    const screen = document.getElementById('countdown-screen');
+    const hoje = new Date();
+
+    // Só mostra se ainda não chegou a data de volta
+    if (hoje >= DATA_VOLTA) return;
+
+    // Mostrar tela
+    screen.classList.add('active');
+
+    // Partículas flutuantes no fundo
+    criarParticulasCD();
+
+    // Atualizar milestones
+    atualizarMilestones();
+
+    // Timer
+    function tick() {
+        const agora = new Date();
+        const diff = DATA_VOLTA - agora;
+        if (diff <= 0) {
+            screen.classList.remove('active');
+            return;
+        }
+        const d = Math.floor(diff / 864e5);
+        const h = Math.floor((diff % 864e5) / 36e5);
+        const m = Math.floor((diff % 36e5) / 6e4);
+        const s = Math.floor((diff % 6e4) / 1e3);
+
+        document.getElementById('cd-dias').textContent  = String(d).padStart(2,'0');
+        document.getElementById('cd-horas').textContent = String(h).padStart(2,'0');
+        document.getElementById('cd-mins').textContent  = String(m).padStart(2,'0');
+        document.getElementById('cd-segs').textContent  = String(s).padStart(2,'0');
+
+        // Mini timer na celebração também
+        const miniTimer = document.getElementById('cel-mini-timer');
+        if (miniTimer) miniTimer.textContent = `${d} dia${d !== 1 ? 's' : ''}`;
+    }
+    tick();
+    setInterval(tick, 1000);
+
+    // Botão entrar
+    document.getElementById('cd-enter').addEventListener('click', () => {
+        screen.classList.remove('active');
+        // Checar se é dia de celebração antes de mostrar welcome
+        verificarCelebracao();
     });
 }
 
-/* ── NOTIFICAÇÃO DIÁRIA ────────────── */
-async function pedirPermissaoNotificacao() {
-    if (!('Notification' in window) || !('serviceWorker' in navigator)) return;
-    if (Notification.permission === 'default') {
-        await Notification.requestPermission();
-    }
-    agendarNotificacaoDiaria();
-}
-
-function agendarNotificacaoDiaria() {
-    if (Notification.permission !== 'granted') return;
-
-    // Verificar se já enviou hoje
-    const hoje = new Date().toDateString();
-    const ultima = localStorage.getItem('ultimaNotificacao');
-    if (ultima === hoje) return;
-
-    const idx = Math.floor(new Date().getTime() / (1000 * 60 * 60 * 24)) % mensagensDoDia.length;
-    const msg = mensagensDoDia[idx];
-
-    // Calcular ms até 9h de amanhã (ou agora se já passou)
+function atualizarMilestones() {
     const agora = new Date();
-    const alvo  = new Date(agora);
-    alvo.setHours(9, 0, 0, 0);
-    if (alvo <= agora) alvo.setDate(alvo.getDate() + 1);
-    const delay = alvo - agora;
 
-    setTimeout(() => {
-        new Notification('Nosso Cantinho 💚', {
-            body: msg,
-            icon: 'icon-192.png',
-            badge: 'icon-192.png',
-        });
-        localStorage.setItem('ultimaNotificacao', new Date().toDateString());
-        agendarNotificacaoDiaria(); // reagendar
-    }, delay);
+    // Aniversário 6 meses
+    const msAniv = document.getElementById('ms-aniversario');
+    const msAnivCount = document.getElementById('ms-aniv-count');
+    const diffAniv = DATA_ANIVERSARIO - agora;
+    if (diffAniv <= 0) {
+        msAniv.classList.add('passou');
+        msAnivCount.textContent = 'já passou 💚';
+    } else {
+        const dias = Math.floor(diffAniv / 864e5);
+        msAnivCount.textContent = `em ${dias} dia${dias !== 1 ? 's' : ''}`;
+    }
+
+    // Dia dos namorados
+    const msNamor = document.getElementById('ms-namorados');
+    const msNamorCount = document.getElementById('ms-namor-count');
+    const diffNamor = DATA_NAMORADOS - agora;
+    if (diffNamor <= 0) {
+        msNamor.classList.add('passou');
+        msNamorCount.textContent = 'já passou 🌹';
+    } else {
+        const dias = Math.floor(diffNamor / 864e5);
+        msNamorCount.textContent = `em ${dias} dia${dias !== 1 ? 's' : ''}`;
+    }
 }
 
-// Pedir permissão após 3s (não interromper na entrada)
-setTimeout(pedirPermissaoNotificacao, 3000);
+/* ── PARTÍCULAS NO FUNDO DO COUNTDOWN ─ */
+
+function criarParticulasCD() {
+    const container = document.getElementById('cd-particles');
+    if (!container) return;
+    const emojis = ['💚','✨','🌿','💫','🫶'];
+    for (let i = 0; i < 12; i++) {
+        const p = document.createElement('span');
+        p.style.cssText = `
+            position:absolute;
+            font-size:${14 + Math.random()*16}px;
+            left:${Math.random()*100}%;
+            top:${Math.random()*100}%;
+            opacity:${0.06 + Math.random()*0.1};
+            animation:particleFloat ${6+Math.random()*8}s ease-in-out infinite;
+            animation-delay:${Math.random()*5}s;
+            pointer-events:none;
+        `;
+        p.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+        container.appendChild(p);
+    }
+
+    // Injetar keyframe se não existe
+    if (!document.getElementById('particle-style')) {
+        const s = document.createElement('style');
+        s.id = 'particle-style';
+        s.textContent = `
+            @keyframes particleFloat {
+                0%,100%{ transform:translateY(0) rotate(0deg); }
+                33%    { transform:translateY(-18px) rotate(8deg); }
+                66%    { transform:translateY(10px) rotate(-6deg); }
+            }
+        `;
+        document.head.appendChild(s);
+    }
+}
+
+/* ── TELA DE CELEBRAÇÃO ─────────────── */
+
+function verificarCelebracao() {
+    const agora = new Date();
+    const hoje  = new Date().toLocaleDateString("sv-SE", {timeZone:"Europe/Paris"}); // fuso europeu
+
+    const ehAniversario = hoje === '2026-06-09';
+    const ehDiaNamorados = hoje === '2026-06-12';
+
+    if (!ehAniversario && !ehDiaNamorados) return;
+
+    const screen = document.getElementById('celebration-screen');
+    const emoji  = document.getElementById('cel-emoji');
+    const tag    = document.getElementById('cel-tag');
+    const title  = document.getElementById('cel-title');
+    const msg    = document.getElementById('cel-msg');
+
+    if (ehAniversario) {
+        emoji.textContent = '💚';
+        tag.textContent   = '09 de junho de 2026 · 6 meses juntos';
+        title.innerHTML   = '6 meses de<br><em style="color:var(--green)">você e eu</em>';
+        msg.innerHTML     = `
+            <span style="display:block;margin-bottom:12px">meio ano inteiro com você.</span>
+            <span style="display:block;margin-bottom:12px">seis meses de mensagem de bom dia, de ligação tarde da noite, de saudade que dói mas também aquece — porque pelo menos significa que você importa demais.</span>
+            <span style="display:block;margin-bottom:12px">você foi embora pro intercâmbio e mesmo assim continuou sendo minha pessoa favorita do mundo. isso não é pouca coisa.</span>
+            <span style="display:block;color:#c8d0c0;font-size:14px">já faltam poucos dias pra eu te abraçar de verdade. 💚</span>
+        `;
+    } else {
+        emoji.textContent = '🌹';
+        tag.textContent   = '12 de junho · dia dos namorados';
+        title.innerHTML   = 'feliz dia dos<br><em style="color:var(--green)">namorados</em>';
+        msg.innerHTML     = `
+            <span style="display:block;margin-bottom:12px">você tá lá e eu tô aqui, mas hoje é nosso do mesmo jeito.</span>
+            <span style="display:block;margin-bottom:12px">não precisei de um jantar ou de flores pra saber o quanto gosto de você — eu sinto isso toda vez que você manda uma mensagem no meio do dia só pra dizer que tá pensando em mim.</span>
+            <span style="display:block;margin-bottom:12px">esse é meu dia dos namorados favorito. mesmo de longe. mesmo com saudade.</span>
+            <span style="display:block;color:#c8d0c0;font-size:14px">logo logo você volta e a gente comemora de pertinho. 💚🌹</span>
+        `;
+    }
+
+    screen.classList.add('active');
+
+    // Confetti
+    setTimeout(() => lancarConfetti(), 400);
+
+    document.getElementById('cel-enter').addEventListener('click', () => {
+        screen.classList.remove('active');
+    });
+}
+
+/* ── CONFETTI ────────────────────────── */
+
+function lancarConfetti() {
+    const canvas = document.getElementById('cel-confetti');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const cores = ['#1DB954','#22e05a','#a8dfc0','#f0e8dc','#dba0b0','#ffffff'];
+    const particulas = Array.from({length: 120}, () => ({
+        x:   Math.random() * canvas.width,
+        y:   -10 - Math.random() * 200,
+        w:   4 + Math.random() * 7,
+        h:   10 + Math.random() * 12,
+        cor: cores[Math.floor(Math.random() * cores.length)],
+        vx:  (Math.random() - .5) * 3,
+        vy:  1.5 + Math.random() * 3,
+        rot: Math.random() * 360,
+        vr:  (Math.random() - .5) * 6,
+        opa: 1,
+    }));
+
+    let frame;
+    function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        let vivas = 0;
+        particulas.forEach(p => {
+            if (p.y > canvas.height + 20) return;
+            vivas++;
+            p.x   += p.vx;
+            p.y   += p.vy;
+            p.rot += p.vr;
+            p.opa -= 0.004;
+            ctx.save();
+            ctx.globalAlpha = Math.max(0, p.opa);
+            ctx.translate(p.x, p.y);
+            ctx.rotate(p.rot * Math.PI / 180);
+            ctx.fillStyle = p.cor;
+            ctx.beginPath();
+            ctx.roundRect(-p.w/2, -p.h/2, p.w, p.h, 2);
+            ctx.fill();
+            ctx.restore();
+        });
+        if (vivas > 0) frame = requestAnimationFrame(draw);
+        else ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+    draw();
+    // Segunda salva de confetti
+    setTimeout(() => {
+        particulas.forEach(p => {
+            p.y = -10 - Math.random() * 200;
+            p.x = Math.random() * canvas.width;
+            p.opa = 1;
+        });
+        if (frame) cancelAnimationFrame(frame);
+        draw();
+    }, 2000);
+}
+
+/* ── INICIAR FLUXO ──────────────────── */
+
+window.addEventListener('load', () => {
+    setTimeout(() => {
+        // Depois do loading, checar o que mostrar
+        const agora = new Date();
+        const hoje  = new Date().toLocaleDateString("sv-SE", {timeZone:"Europe/Paris"}); // fuso europeu
+        const ehCelebracao = hoje === '2026-06-09' || hoje === '2026-06-12';
+        const ehDepoisVolta = agora >= DATA_VOLTA;
+
+        if (ehDepoisVolta) {
+            // Tela de volta
+        } else if (ehCelebracao) {
+            // Esconder welcome, mostrar celebração direto
+            document.getElementById('welcome-screen').style.display = 'none';
+            verificarCelebracao();
+        } else {
+            // Mostrar countdown ao entrar (depois de fechar o welcome)
+            const origEnter = document.getElementById('enter-btn');
+            if (origEnter) {
+                origEnter.addEventListener('click', () => {
+                    setTimeout(iniciarCountdown, 650);
+                }, { once: true });
+            }
+        }
+    }, 2000);
+});
