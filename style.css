@@ -669,6 +669,8 @@ body {
 .return-card h1 em { font-style:normal; }
 .return-msg { color:#aaa; font-size:16px; line-height:1.8; margin-bottom:16px; font-weight:300; }
 .return-sub  { color:var(--rose); font-size:14px; }
+#btn-entrar-site { margin-top:28px; background:var(--green); color:#000; border:none; border-radius:99px; padding:12px 28px; font-size:14px; font-weight:600; cursor:pointer; transition:opacity .2s, transform .2s; }
+#btn-entrar-site:hover { opacity:.85; transform:scale(1.04); }
 
 /* ═══════════════════════════════════════
    CORAÇÕES FLUTUANTES
