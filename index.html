@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <link rel="manifest" href="../manifest.json">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0d1f12">
+    <title>Nosso Cantinho 💚</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="icon-180.png">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- LOADING -->
+<div id="loading-screen">
+    <div class="loading-inner">
+        <div class="loading-logo">
+            <span class="logo-heart">💚</span>
+            <span class="logo-wave"></span>
+        </div>
+        <p class="loading-title">Nosso Cantinho</p>
+        <p class="loading-sub">carregando memórias...</p>
+        <div class="loading-bar"><div class="loading-fill"></div></div>
+    </div>
+</div>
+
+<!-- CARTA MODAL -->
+<div id="letter-modal">
+    <div class="letter-overlay" id="letter-overlay"></div>
+    <div class="letter-card">
+        <button id="close-letter">✕</button>
+        <div class="letter-stamp">💌</div>
+        <p class="letter-from">pra você, onde quer que esteja 💚</p>
+        <h2 class="letter-title">Do lugar onde eu mais sinto sua falta</h2>
+        <div class="letter-divider"></div>
+        <div class="letter-text">
+            <p>Essa playlist existia antes de você embarcar. Fiz ela pensando em você, com músicas que me fazem lembrar da gente.</p>
+            <p>Já faz mais de cem dias. E eu ainda ouço essas músicas pensando em você do outro lado do mundo.</p>
+            <p>Eu sei que o intercâmbio foi e está sendo incrível pra você, e eu fico feliz por isso. De verdade.</p>
+            <p>Mas também sinto sua falta todo dia. Bastante. Mais do que consigo explicar.</p>
+            <p>Esse cantinho é pra você voltar quando quiser — pra ouvir, lembrar, ou só sentir um pouquinho de "nós" mesmo com o oceano no meio. Já tá quase. 💚</p>
+            <p class="signature">com muito amor e saudade,<br><em>seu fofuxo 💚</em></p>
+        </div>
+    </div>
+</div>
+
+<!-- WELCOME -->
+<div id="welcome-screen">
+    <div class="welcome-bg" id="welcome-bg"></div>
+    <div class="welcome-particles" id="welcome-particles"></div>
+    <div class="welcome-card">
+        <div class="welcome-badge">💚 109 dias de saudade e contando</div>
+        <h1 class="welcome-title">essa playlist nasceu<br><em>do quanto sinto sua falta</em></h1>
+        <p class="welcome-sub">você tá na Europa, eu tô aqui — mas essa playlist é o lugar onde a gente ainda fica junto</p>
+        <button id="enter-btn">
+            <span class="btn-icon">🎧</span>
+            <span>Abrir nossa playlist</span>
+        </button>
+        <p class="welcome-hint">💚 cada música tem um porquê</p>
+    </div>
+</div>
+
+<!-- FUNDO DINÂMICO -->
+<div id="background-blur"></div>
+<div id="background-overlay"></div>
+
+<!-- CORAÇÕES -->
+<div id="hearts-container"></div>
+
+<!-- APP -->
+<div class="app">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <span class="sidebar-heart">💚</span>
+            <span class="sidebar-name">MyRafafy</span>
+        </div>
+        <nav class="sidebar-nav">
+            <a class="nav-item active" href="#" data-view="playlist">
+                <span class="nav-icon">🏠</span>
+                <span>Início</span>
+            </a>
+            <a class="nav-item" href="#" data-view="playlist">
+                <span class="nav-icon">🎵</span>
+                <span>Biblioteca</span>
+            </a>
+            <a class="nav-item" href="#" data-view="diario">
+                <span class="nav-icon">📸</span>
+                <span>Diário de Viagem</span>
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <div class="sidebar-stats">
+                <div class="stat-item">
+                    <span class="stat-num" id="sb-dias">—</span>
+                    <span class="stat-label">dias longe</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <span class="stat-num">21</span>
+                    <span class="stat-label">músicas</span>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main-content">
+
+        <!-- HERO NOVO — cover grande, gradiente -->
+        <section class="hero">
+            <div class="hero-cover-wrap">
+                <img id="hero-cover" src="covers/romantic.jpg" alt="Nossa playlist">
+                <div class="hero-cover-glow"></div>
+            </div>
+            <div class="hero-content">
+                <span class="hero-tag">💚 NOSSA PLAYLIST · JÁ FAZ TEMPO</span>
+                <h1 class="hero-title">Perto de<br><em>Voltar</em></h1>
+                <p class="hero-msg" id="daily-message">carregando carinho... 💚</p>
+
+                <!-- STATS ROW -->
+                <div class="hero-stats">
+                    <div class="hstat">
+                        <span class="hstat-val" id="contador">—</span>
+                        <span class="hstat-lbl">faltam</span>
+                    </div>
+                    <div class="hstat">
+                        <span class="hstat-val" id="dias-passados">—</span>
+                        <span class="hstat-lbl">longe</span>
+                    </div>
+                    <div class="hstat">
+                        <span class="hstat-val" id="top-song-val">—</span>
+                        <span class="hstat-lbl">mais tocada</span>
+                    </div>
+                </div>
+
+                <!-- BOTÕES HERO -->
+                <div class="hero-actions">
+                    <button class="btn-primary" id="play-hero">
+                        <span>▶</span> Tocar tudo
+                    </button>
+                    <button class="btn-ghost" id="saudade-btn">
+                        💚 sentindo saudade
+                    </button>
+                    <button class="btn-ghost btn-letter" id="open-letter">
+                        💌 carta
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- BUSCA -->
+        <div class="search-bar">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="search-input" placeholder="Buscar música ou artista...">
+            <span class="search-count" id="search-count">21 músicas</span>
+        </div>
+
+        <!-- PLAYLIST TÍTULO -->
+        <div class="section-header">
+            <h2>Sua Playlist</h2>
+            <span class="section-sub">cada uma escolhida com amor</span>
+        </div>
+
+        <div id="playlist" class="playlist"></div>
+
+    </main>
+
+    <!-- DIÁRIO DE VIAGEM -->
+    <main class="main-content diario-view" id="diario-view" style="display:none">
+
+        <section class="hero diario-hero">
+            <div class="hero-cover-wrap">
+                <img src="covers/romantic.jpg" alt="Diário" id="diario-hero-img">
+                <div class="hero-cover-glow"></div>
+            </div>
+            <div class="hero-content">
+                <span class="hero-tag">📸 DIÁRIO DE VIAGEM · DO RAFA PRA MIM</span>
+                <h1 class="hero-title">Memórias<br><em>da Europa</em></h1>
+                <p class="hero-msg">fotos, cartas e momentos que você quis guardar pra mim 💚</p>
+                <div class="hero-actions">
+                    <button class="btn-primary" id="abrir-form-diario">
+                        <span>✏️</span> Nova entrada
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-header">
+            <h2>Suas Entradas</h2>
+            <span class="section-sub" id="diario-count">nenhuma entrada ainda</span>
+        </div>
+
+        <div id="diario-lista" class="diario-lista">
+            <div class="diario-vazio" id="diario-vazio">
+                <span class="diario-vazio-icon">📭</span>
+                <p>ainda não tem nada aqui.</p>
+                <p class="diario-vazio-sub">quando quiser me mandar uma fotinha ou uma cartinha, clica em "Nova entrada" 💚</p>
+            </div>
+        </div>
+
+    </main>
+</div>
+
+<!-- PLAYER REDESENHADO -->
+<div class="player" id="player">
+    <!-- barra de progresso toda a largura no topo -->
+    <div class="player-progress">
+        <span class="time" id="time-current">0:00</span>
+        <div class="progress-track">
+            <input type="range" id="progress" value="0" min="0" max="100" step="0.1">
+            <div class="progress-fill" id="progress-fill"></div>
+        </div>
+        <span class="time" id="time-total">0:00</span>
+    </div>
+
+    <div class="player-body">
+        <!-- ESQUERDA: info -->
+        <div class="player-info">
+            <div class="player-cover-wrap">
+                <img id="cover" src="" alt="">
+                <div class="player-cover-ring"></div>
+            </div>
+            <div class="player-text">
+                <p class="player-title" id="title">Nenhuma música</p>
+                <p class="player-artist" id="artist">Selecione uma música</p>
+                <p class="player-msg" id="music-message"></p>
+            </div>
+        </div>
+
+        <!-- CENTRO: controles -->
+        <div class="player-controls">
+            <button class="ctrl-btn" id="shuffle" title="Aleatório">🔀</button>
+            <button class="ctrl-btn" id="prev" title="Anterior">⏮</button>
+            <button class="ctrl-btn ctrl-play" id="play">▶</button>
+            <button class="ctrl-btn" id="next" title="Próxima">⏭</button>
+            <button class="ctrl-btn" id="repeat" title="Repetir">🔁</button>
+        </div>
+
+        <!-- DIREITA: volume -->
+        <div class="player-vol">
+            <span class="vol-icon">🔊</span>
+            <input type="range" id="volume" min="0" max="100" value="100">
+        </div>
+    </div>
+</div>
+
+<!-- MEMORY TOAST -->
+<div id="memory-popup" class="toast">
+    <img id="memory-photo" src="" alt="">
+    <div class="toast-text">
+        <p class="toast-label">💚 lembrança</p>
+        <p id="memory-message">lembrei desse dia</p>
+    </div>
+</div>
+
+<!-- SAUDADE TOAST -->
+<div id="saudade-popup" class="toast toast-top">
+    <span class="toast-icon">💚</span>
+    <div class="toast-text">
+        <p class="toast-label">pra quando apertar</p>
+        <p>tô aqui com você.</p>
+    </div>
+</div>
+
+<!-- RETURN -->
+<div id="return-screen">
+    <div class="return-card">
+        <img src="covers/PHOTO-2026-05-26-13-39-36 2.jpg" alt="Nós">
+        <p class="return-tag">🛬 finalmente</p>
+        <h1>você voltou<br><em>💚</em></h1>
+        <p class="return-msg">mais de 150 dias de distância.<br>e você voltou. finalmente.</p>
+        <p class="return-sub">agora não te largo mais. 💚</p>
+    </div>
+</div>
+
+<!-- CONTAGEM REGRESSIVA DA VOLTA -->
+<div id="countdown-screen">
+    <div class="cd-bg" id="cd-bg"></div>
+    <div class="cd-particles" id="cd-particles"></div>
+    <div class="cd-card">
+        <div class="cd-top">
+            <span class="cd-plane">✈️</span>
+            <p class="cd-label">falta pouco — Meu Rafa volta em</p>
+        </div>
+        <div class="cd-timer">
+            <div class="cd-unit">
+                <span class="cd-num" id="cd-dias">00</span>
+                <span class="cd-unit-lbl">dias</span>
+            </div>
+            <span class="cd-sep">:</span>
+            <div class="cd-unit">
+                <span class="cd-num" id="cd-horas">00</span>
+                <span class="cd-unit-lbl">horas</span>
+            </div>
+            <span class="cd-sep">:</span>
+            <div class="cd-unit">
+                <span class="cd-num" id="cd-mins">00</span>
+                <span class="cd-unit-lbl">minutos</span>
+            </div>
+            <span class="cd-sep">:</span>
+            <div class="cd-unit">
+                <span class="cd-num" id="cd-segs">00</span>
+                <span class="cd-unit-lbl">segundos</span>
+            </div>
+        </div>
+        <p class="cd-date">11 de julho de 2026</p>
+        <div class="cd-divider"></div>
+        <p class="cd-msg">você está na reta final.
+cada dia que passa é um dia a menos de distância. 💚</p>
+        <div class="cd-milestones">
+            <div class="cd-milestone" id="ms-aniversario">
+                <span class="ms-icon">💚</span>
+                <div class="ms-text">
+                    <p class="ms-title">6 meses juntos</p>
+                    <p class="ms-date">09 de junho · <span id="ms-aniv-count"></span></p>
+                </div>
+            </div>
+            <div class="cd-milestone" id="ms-namorados">
+                <span class="ms-icon">🌹</span>
+                <div class="ms-text">
+                    <p class="ms-title">dia dos namorados</p>
+                    <p class="ms-date">12 de junho · <span id="ms-namor-count"></span></p>
+                </div>
+            </div>
+            <div class="cd-milestone" id="ms-1ano">
+                <span class="ms-icon">🎉</span>
+                <div class="ms-text">
+                    <p class="ms-title">1 ano juntos 🎉</p>
+                    <p class="ms-date">09 de dezembro de 2026</p>
+                </div>
+            </div>
+        </div>
+        <button class="cd-enter" id="cd-enter">🎧 entrar na playlist</button>
+    </div>
+</div>
+
+<!-- CELEBRAÇÃO — aparece no 09/06 e 12/06 -->
+<div id="celebration-screen">
+    <div class="cel-bg" id="cel-bg"></div>
+    <canvas id="cel-confetti"></canvas>
+    <div class="cel-card">
+        <div class="cel-emoji" id="cel-emoji">💚</div>
+        <p class="cel-tag" id="cel-tag">hoje é especial</p>
+        <h1 class="cel-title" id="cel-title">título</h1>
+        <div class="cel-hearts-row">
+            <span>💚</span><span>🫶</span><span>💚</span><span>🌿</span><span>💚</span>
+        </div>
+        <p class="cel-msg" id="cel-msg">mensagem aqui</p>
+        <div class="cel-countdown-mini">
+            <p class="cel-mini-label">falta pouco — ele volta em</p>
+            <p class="cel-mini-timer" id="cel-mini-timer">— dias</p>
+        </div>
+        <button class="cel-btn" id="cel-enter">💚 abrir nossa playlist</button>
+    </div>
+</div>
+
+<!-- MODAL DIÁRIO -->
+<div id="diario-modal" class="diario-modal-overlay" style="display:none">
+    <div class="diario-modal-card">
+        <button class="diario-modal-close" id="fechar-form-diario">✕</button>
+        <div class="diario-modal-header">
+            <span class="diario-modal-emoji">📝</span>
+            <h2>Nova Entrada</h2>
+            <p>manda uma foto, uma cartinha, ou os dois 💚</p>
+        </div>
+
+        <div class="diario-form">
+            <div class="diario-field">
+                <label>título da entrada</label>
+                <input type="text" id="diario-titulo" placeholder="ex: Primeira semana em Paris ✨" maxlength="80">
+            </div>
+
+            <div class="diario-field">
+                <label>mensagem pra mim 💚</label>
+                <textarea id="diario-mensagem" placeholder="escreve o que quiser, tô toda ouvidos..." rows="5" maxlength="1000"></textarea>
+            </div>
+
+            <div class="diario-field">
+                <label>foto (opcional)</label>
+                <div class="diario-upload-area" id="diario-upload-area">
+                    <input type="file" id="diario-foto-input" accept="image/*" style="display:none">
+                    <div class="diario-upload-placeholder" id="diario-upload-placeholder">
+                        <span>📷</span>
+                        <p>clica pra escolher uma foto</p>
+                    </div>
+                    <img id="diario-preview" class="diario-preview-img" src="" alt="" style="display:none">
+                    <button class="diario-remover-foto" id="diario-remover-foto" style="display:none">✕ remover</button>
+                </div>
+            </div>
+
+            <div class="diario-field">
+                <label>onde você estava? (opcional)</label>
+                <input type="text" id="diario-lugar" placeholder="ex: Roma, Coliseu 🇮🇹" maxlength="60">
+            </div>
+
+            <div class="diario-form-actions">
+                <button class="btn-ghost" id="cancelar-diario">cancelar</button>
+                <button class="btn-primary" id="salvar-diario">💚 salvar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL VER ENTRADA -->
+<div id="diario-ver-modal" class="diario-modal-overlay" style="display:none">
+    <div class="diario-modal-card diario-ver-card">
+        <button class="diario-modal-close" id="fechar-ver-diario">✕</button>
+        <div id="diario-ver-foto-wrap" class="diario-ver-foto-wrap" style="display:none">
+            <img id="diario-ver-foto" src="" alt="">
+        </div>
+        <div class="diario-ver-body">
+            <p class="diario-ver-lugar" id="diario-ver-lugar" style="display:none"></p>
+            <h2 class="diario-ver-titulo" id="diario-ver-titulo"></h2>
+            <p class="diario-ver-data" id="diario-ver-data"></p>
+            <div class="diario-ver-divider"></div>
+            <p class="diario-ver-mensagem" id="diario-ver-mensagem"></p>
+            <button class="diario-apagar-btn" id="diario-apagar-btn">🗑️ apagar entrada</button>
+        </div>
+    </div>
+</div>
+
+<audio id="audio"></audio>
+<script src="script.js"></script>
+</body>
+</html>
